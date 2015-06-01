@@ -7,7 +7,7 @@ mongo = PyMongo(app)
 def AddImagesUrl(url):
     insert = { 'url' : url , 'count' : '0' }
     item = mongo.db.images.insert(insert)
-    return jsonify({ 'id' : str(item), 'url' : url, 'count': '0' })
+    return jsonify(insert)
 
 @app.route('/images/deleteAll', methods=['GET'])
 def RemoveAll():
