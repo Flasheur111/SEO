@@ -13,10 +13,12 @@ def not_found(error):
 
 
 # Importing modules
-from app.home.views import home as home
+from app.home.views import home
+from app.articles.views import articles
 
 # Register blueprints
 app.register_blueprint(home)
+app.register_blueprint(articles)
 
 # Basic route
 @app.route('/')
