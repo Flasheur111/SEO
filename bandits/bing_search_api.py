@@ -8,9 +8,6 @@ class BingSearchAPI():
         self.key = key
 
     def replace_symbols(self, request):
-        # Custom urlencoder.
-        # They specifically want %27 as the quotation which is a single quote '
-        # We're going to map both ' and " to %27 to make it more python-esque
         request = string.replace(request, "'", '%27')
         request = string.replace(request, '"', '%27')
         request = string.replace(request, '+', '%2b')
@@ -25,13 +22,3 @@ class BingSearchAPI():
             request += '&' + key + '=' + str(value)
         request = self.bing_api + self.replace_symbols(request)
         return requests.get(request, auth=(self.key, self.key))
-
-
-if __name__ == "__main__":
-    my_key = "[your key]"
-    query_string = "Brad Pitt"
-    bing = BingSearchAPI(my_key)
-    params = {'$format': 'json',
-              '$top': 10,
-              '$skip': 0}
-    print bing.search('image',query_string,params).json()
