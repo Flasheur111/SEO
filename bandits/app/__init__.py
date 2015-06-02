@@ -47,9 +47,11 @@ def RemoveAll():
 def ListImages():
     array_image = []
     for image in mongo.db.images.find().sort('count', -1):
-        array_image.append({ 'MediaUrl' : image['mediaurl'], 'SourceUrl' : image['sourceurl'], 'Title' : image['title'], 'count' : image['count']})
+        array_image.append({ 'MediaUrl' : image['mediaurl'],
+                             'SourceUrl' : image['sourceurl'],
+                             'Title' : image['title'],
+                             'count' : image['count']})
     return jsonify({'results' : array_image })
-
 
 
 def GetRandomWord():
@@ -74,8 +76,6 @@ def FindRandomImages(query):
         mediaArray.append((image['MediaUrl'], image['SourceUrl'], image['Title']))
     return mediaArray
 
-if __name__ == "__main__":
-    with open('fresh_words.csv', 'r') as f:
-        for line in f:
-            words.append(line[:-1])
-    app.run(debug=True)
+with open('dataset/fresh_words.csv', 'r') as f:
+    for line in f:
+    	words.append(line[:-1])
