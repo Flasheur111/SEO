@@ -2,7 +2,7 @@ from TreeTagger import treetaggerwrapper
 from TreeTagger.TreeTaggerWord import *
 from math import log
 
-def lemmatisation(array_rss, k):
+def lemmatisation(array_rss, k=1):
     occ = {}
     doc = {}
     for rss in array_rss:
@@ -10,14 +10,17 @@ def lemmatisation(array_rss, k):
 
     max_occ = max(result.values())
     nb_doc = len(array_rss)
+
+    result = {}
     for key in result:
         tf = result[key] / max_occ
-        #print "NbDoc: " + str(nb_doc) + " Doc: " + str(doc[key])
         idf = log(nb_doc / doc[key]) + 1
         score = tf * idf
-        #Faire quelquechose avec !!!
-        #To delete
-        print(key + ' ' + str(tf) + ' ' + str(idf))
+        result[key] = score
+
+    #Sorting the dictionary
+    result = sorted(result, key=result.get, reverse=True)
+    return result
 
 def lemmatisation_intern(rss, k, result, doc):
     # Construction et configuration du wrapper
@@ -25,7 +28,6 @@ def lemmatisation_intern(rss, k, result, doc):
                                           TAGINENC='utf-8',TAGOUTENC='utf-8')
 
     # Utilisation
-    print('rss is ' + rss)
     tags = tagger.TagText(rss)
     data = formatTTG(tags)
 
@@ -47,6 +49,3 @@ def lemmatisation_intern(rss, k, result, doc):
         result[lemma] += 1
         i += 1
     return result, doc
-
-
-lemmatisation(['What I did for love ?'], 1)
