@@ -13,6 +13,7 @@ def lemmatisation(array_rss, k):
     for key in result:
         tf = result[key] / max_occ
         idf = log(nb_doc / doc[key]) + 1
+        score = tf * idf
         #Faire quelquechose avec !!!
         #To delete
         print key + ' ' + str(tf) + ' ' + str(idf)
@@ -29,8 +30,8 @@ def lemmatisation(input, k, result, doc):
     liste = []
 
     i = 0
-    while i <= len(data) - 1:
-        lemma = data[i].lemma
+    while i <= len(data) - k:
+        lemma = data[i].lemma + data[i + 1].lemma + data[i + 3].lemma
         if not result.has_key(lemma):
             result[lemma] = 0
             doc[lemma] = 1
