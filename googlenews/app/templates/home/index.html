@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-  <meta charset="UTF-8"/>
-  <title>Project 3 By Vince & Mohamed</title>
-  <link rel="stylesheet" type=text/css href="{{ url_for('static, filename='style.css') }}"/>
-</head>
-<body>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block body %}
+    <!-- DropDownlist of all the categories -->
+    <label for="categories">Categories: </label>
+    <select name="categories" class=entries onchange="">
+    {% for category in categories %}
+        <option value="{{ category.keywords }}" onchange="">{{ category.title }}</option>
+    {% else %}
+        <option value="No Category Found">
+    {% endfor %}
+    </select>
+
+    <!-- Printing all the key words for the category selected -->
+    <ul id="keywords">
+    {% for key_word in key_words %}
+        <li class="keyword">{{ key_word }}</li>
+    {% else %}
+        <li class="keyword">No keyword found</li>
+    {% endfor %}
+    </ul>
+
+    <!-- Form for posting a news -->
+    <form method="post" name="post_news" id="form_news">
+        <input type="text" placeholder="Title" name="title"/>
+        <input type="file" accept="image/*" name="image"/>
+        <input type="submit"/>
+    </form>
+    <textarea name="content" form="form_news">
+        Enter the content here....
+    </textarea>
+
+{% endblock %}
+<script type="text/javascript">
+    function onCategoryChange(opt) {
+        var keywords = opt.attr('value');
+
+        var keywords_html = document.getElementById('keywords');
+        keywords_html.deleteContents();
+
+        for (var i = 0; i < keywords.count; ++i) {
+            var keyword_html = document.createElement('li');
+            keyword_html.appendChild(document.createTextNode(keywords[i]));
+            keywords_html.appendChild(keyword_html);
+        }
+        keywords_html.createElement('li')
+    }
+</script>

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
 
-from app.tools.rss_parser import RssParser
+from tools.rss_parser import RssParser
 
 articles = Blueprint('articles', __name__, url_prefix='/articles')
 
