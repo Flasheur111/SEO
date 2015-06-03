@@ -1,5 +1,5 @@
 all:
-   	pip install flask
+	pip install flask
 
 run:
 	python run.py
