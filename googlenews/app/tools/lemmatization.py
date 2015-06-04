@@ -1,5 +1,5 @@
-from TreeTagger import treetaggerwrapper
-from TreeTagger.TreeTaggerWord import *
+from app.tools.TreeTagger import treetaggerwrapper
+from app.tools.TreeTagger.TreeTaggerWord import *
 from math import log
 
 def lemmatisation(array_rss, k=1):
