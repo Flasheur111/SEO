@@ -23,4 +23,4 @@ app.register_blueprint(articles)
 # Basic route
 @app.route('/')
 def index():
-    return render_template('home/welcome.html')
+    return render_template('home/index.html')

@@ -8,5 +8,6 @@ def index():
     #Pass the key words to the view
     categories = []
     key_words = {}
-    #key_words = lemmatization.lemmatisation(array_rss, 2);
+    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(array_rss, 2);
     return render_template('/home/index.html', categories=categories, key_words=key_words)
+
