@@ -8,4 +8,4 @@ class ArticleParser:
 
         article.parse()
 
-        return (article.authors, article.publish_date, article.text, article.top_image)
+        return article.text

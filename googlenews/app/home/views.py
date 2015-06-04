@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from tools import lemmatization
+from app.tools import lemmatization
 
 home = Blueprint('home', __name__, url_prefix='/home')
 

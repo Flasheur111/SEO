@@ -7,7 +7,7 @@ articles = Blueprint('articles', __name__, url_prefix='/articles')
 
 @articles.route('/', methods=['GET'])
 def get_articles():
-    count =  int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
+    count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
     rp = RssParser()
     ar = ArticleParser()
     l = [ ar.get_corpus(a_link) for a_link in rp.get_news_urls(count)]
