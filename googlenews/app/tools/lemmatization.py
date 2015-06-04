@@ -2,6 +2,15 @@ from app.tools.TreeTagger import treetaggerwrapper
 from app.tools.TreeTagger.TreeTaggerWord import *
 from math import log
 
+def lemmatisation_full_article(article_rss, k=1):
+    titles = lemmatisation(article_rss.keys(), k)
+    contents = lemmatisation(article_rss.values(), k)
+
+    articles = []
+    for key in article_rss:
+        articles.append((titles[key], contents[article_rss[key]]))
+    return articles
+
 def lemmatisation(array_rss, k=1):
     occ = {}
     doc = {}

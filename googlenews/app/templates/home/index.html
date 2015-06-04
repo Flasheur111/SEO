@@ -3,6 +3,7 @@
     <!-- DropDownlist of all the categories -->
     <label for="categories">Categories: </label>
     <select name="categories" id="categories" onchange="onCategoryChange(this);">
+        <option value="">All</option>
     {% for category in categories %}
         <option value="{{ category.keywords }}">{{ category.title }}</option>
     {% else %}
