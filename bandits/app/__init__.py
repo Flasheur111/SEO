@@ -13,12 +13,13 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET'])
 def Index():
     rand = randint(0, 100)
-    images = [];
     keyword=GetRandomWord()
-    if rand<= 50:
-    	images = FindRandomImages(keyword)
-    else:
-    	images = FindKnownImages()
+    images = FindRandomImages(keyword)
+    if rand > 10:
+    	tmp_images = FindKnownImages()
+    	for i in range(0, 8 - len(tmp_images)):
+    		tmp_images.append(images[i])
+    	images = tmp_images
     return render_template('index.html', images=images, rand=rand, keyword=keyword)
 
 @app.route('/images/add', methods=['POST'])
@@ -66,13 +67,12 @@ def FindKnownImages():
     return mediaArray
 
 def FindRandomImages(query):
-    my_key = "rgCqwxBgK2DcUTFjW3DEsljOvVZ0U0I5rBFytYMTfJg="
+    my_key = "ofiH66W+uTTX65ME7FKhtd2XtgAHxNEljh+700JzqFs"
     mediaArray = []
     bing = BingSearchAPI(my_key)
     params = {'$format': 'json','$top': 8,'$skip': 0}
-    results = bing.search('image', query, params).json()
-    mediaArray = []
-    for image in results['d']['results'][0]['Image']:
+    results = bing.search(query, params).json()
+    for image in results['d']['results']:
         mediaArray.append((image['MediaUrl'], image['SourceUrl'], image['Title']))
     return mediaArray
 
