@@ -2,18 +2,29 @@ from app.tools.TreeTagger import treetaggerwrapper
 from app.tools.TreeTagger.TreeTaggerWord import *
 from math import log
 
-def lemmatisation(array_rss, k=1):
+def lemmatisation_full_article(article_rss, k=1, lang='fr'):
+    titles = lemmatisation(article_rss.keys(), lang, k)
+    contents = lemmatisation(article_rss.values(), lang, k)
+
+    articles = []
+    for key in article_rss:
+        articles.append((titles[key], contents[article_rss[key]]))
+    return articles
+
+def lemmatisation(array_rss, lang, k=1):
+    if len(array_rss) == 0:
+        return {}
     occ = {}
     doc = {}
     for rss in array_rss:
-        result, doc = lemmatisation_intern(rss, k, occ, doc)
+        occ, doc = lemmatisation_intern(lang, rss, k, occ, doc)
 
-    max_occ = max(result.values())
+    max_occ = max(occ.values())
     nb_doc = len(array_rss)
 
     result = {}
     for key in result:
-        tf = result[key] / max_occ
+        tf = occ[key] / max_occ
         idf = log(nb_doc / doc[key]) + 1
         score = tf * idf
         result[key] = score
@@ -22,9 +33,9 @@ def lemmatisation(array_rss, k=1):
     result = sorted(result, key=result.get, reverse=True)
     return result
 
-def lemmatisation_intern(rss, k, result, doc):
+def lemmatisation_intern(lang, rss, k, result, doc):
     # Construction et configuration du wrapper
-    tagger = treetaggerwrapper.TreeTagger(TAGLANG='en',TAGDIR='TreeTagger',
+    tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang,TAGDIR='app/tools/TreeTagger',
                                           TAGINENC='utf-8',TAGOUTENC='utf-8')
 
     # Utilisation

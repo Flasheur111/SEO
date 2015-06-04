@@ -1,10 +1,11 @@
 import feedparser
 
 class RssParser:
-    rss_url = 'http://news.google.fr/news?pz=1&cf=all&ned=fr&hl=fr&output=rss'
 
-    def get_news_urls(self, count = 10):
-        request = self.rss_url + '&num=' + str(count)
+    def get_news_urls(self, count = 10, category='all', lang='fr'):
+        rss_url = 'http://news.google.fr/news?pz=1&cf=' + category + '&ned=' + lang + '&hl=' + lang  + '&output=rss';
+
+        request = rss_url + '&num=' + str(count)
         news_feed = feedparser.parse(request)
 
         article_urls = []

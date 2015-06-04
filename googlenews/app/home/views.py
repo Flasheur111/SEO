@@ -1,12 +1,25 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify, request
+
+from app.tools.rss_parser import RssParser
+from app.tools.article_parser import ArticleParser
+
 from app.tools import lemmatization
 
 home = Blueprint('home', __name__, url_prefix='/home')
 
 @home.route('/', methods=['GET'])
 def index():
-    #Pass the key words to the view
-    categories = []
-    key_words = {}
-    #key_words = lemmatization.lemmatisation(array_rss, 2);
-    return render_template('/home/index.html', categories=categories, key_words=key_words)
+    count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
+    rp = RssParser()
+    ar = ArticleParser()
+    l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count)]
+    article_rss = {elt['title']: elt['text'] for elt in l}
+    # Pass the key words to the view
+    categoriess = ['All', 'News', 'gjejjkgjjegkjgjkejk']
+    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, 2);
+    print(keywords_title)
+    print(keywords_content)
+    return render_template('/home/index.html',
+                           categories=categoriess,
+                           keywords_title=keywords_title,
+                           keywords_content=keywords_content)
