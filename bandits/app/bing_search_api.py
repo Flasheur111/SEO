@@ -1,8 +1,9 @@
 import requests # Get from https://github.com/kennethreitz/requests
 import string
+import json
 
 class BingSearchAPI():
-    bing_api = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/v1/Composite?"
+    bing_api = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Image?"
 
     def __init__(self, key):
         self.key = key
@@ -15,10 +16,10 @@ class BingSearchAPI():
         request = string.replace(request, ':', '%3a')
         return request
 
-    def search(self, sources, query, params):
-        request =  'Sources="' + sources    + '"'
-        request += '&Query="'  + str(query) + '"'
+    def search(self, query, params):
+        request = 'Query="'  + query + '"'
         for key,value in params.iteritems():
             request += '&' + key + '=' + str(value)
         request = self.bing_api + self.replace_symbols(request)
-        return requests.get(request, auth=(self.key, self.key))
+        output = requests.get(request, auth=(self.key, self.key))
+        return output

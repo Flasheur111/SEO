@@ -4,14 +4,9 @@
         <title>{% block title %}Les Bandits Manchots{% endblock %}</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='custom.css') }}">
-
-        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     </head>
-    <body style="height:100%">
-        {% if rand <= 50 %}
+    <body>
+        {% if rand <= 10 %}
         <h1>Keyword : {{ keyword }}</h1>
         <h2 style="background-color:green;">Exploration</h2>
         {% else %}
