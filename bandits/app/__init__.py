@@ -12,7 +12,6 @@ mongo = PyMongo(app)
 
 @app.route('/', methods=['GET'])
 def Index():
-    print 'test'
     rand = randint(0, 100)
     keyword=GetRandomWord()
     images = FindRandomImages(keyword)
