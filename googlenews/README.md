@@ -1,7 +1,7 @@
 **How-to run**
 
 - Install the dependencies with:
-	* make all
+	* make install
 
 - Start the application server with:
 	* make run
