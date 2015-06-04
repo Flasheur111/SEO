@@ -1,0 +1,14 @@
+#page { background-color: #f0f0f0; }
+
+#title { font-size: large; font-weight: bold; text-align: center; margin: 1% auto; }
+
+#categories {}
+
+#keywords { list-style: none; }
+    .keyword {}
+
+#news_form {  }
+    #news_form_title { }
+    #news_form_image { color: cyan; background-color: darkgrey; }
+    #news_form_submit { color: cyan; background-color: darkgrey; }
+    #news_form_content { }
