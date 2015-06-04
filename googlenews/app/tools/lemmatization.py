@@ -35,7 +35,7 @@ def lemmatisation(array_rss, lang, k=1):
 
 def lemmatisation_intern(lang, rss, k, result, doc):
     # Construction et configuration du wrapper
-    tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang,TAGDIR='TreeTagger',
+    tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang,TAGDIR='app/tools/TreeTagger',
                                           TAGINENC='utf-8',TAGOUTENC='utf-8')
 
     # Utilisation

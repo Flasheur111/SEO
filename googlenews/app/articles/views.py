@@ -21,8 +21,13 @@ def index():
     ar = ArticleParser()
     l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count)]
     article_rss = {elt.title: elt.text for elt in l}
-    #Pass the key words to the view
-    categories = ['All', 'News']
+    # Pass the key words to the view
+    categoriess = ['All', 'News', 'gjejjkgjjegkjgjkejk']
     keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, 2);
-    return render_template('/home/index.html', categories=categories, keywords_title=keywords_title, keywords_content=keywords_content)
+    print(keywords_title)
+    print(keywords_content)
+    return render_template('404.html',
+                           categories=categoriess,
+                           keywords_title=keywords_title,
+                           keywords_content=keywords_content)
 

@@ -3,30 +3,29 @@
     <!-- DropDownlist of all the categories -->
     <label for="categories">Categories: </label>
     <select name="categories" id="categories" onchange="onCategoryChange(this);">
-        <option value="">All</option>
     {% for category in categories %}
-        <option value="{{ category.keywords }}">{{ category.title }}</option>
-    {% else %}
-        <option value="No Category Found">
+        <option value="{{ category }}">{{ category }}</option>
     {% endfor %}
     </select>
 
     <!-- Printing all the key words for the category selected -->
-    <ul id="keywords_title">
-    {% for keyword in keywords_title %}
-        <li class="keyword">{{ keyword }}</li>
-    {% else %}
-        <li class="keyword">No keyword found</li>
-    {% endfor %}
-    </ul>
+    <div id="keywords">
+        <ul id="keywords_title">
+        {% for keyword in keywords_title %}
+            <li class="keyword">{{ keyword }}</li>
+        {% else %}
+            <li class="keyword">No keyword found</li>
+        {% endfor %}
+        </ul>
 
-    <ul id="keywords_content">
-    {% for keyword in keywords_content %}
-        <li class="keyword">{{ keyword }}</li>
-    {% else %}
-        <li class="keyword">No keyword found</li>
-    {% endfor %}
-    </ul>
+        <ul id="keywords_content">
+        {% for keyword in keywords_content %}
+            <li class="keyword">{{ keyword }}</li>
+        {% else %}
+            <li class="keyword">No keyword found</li>
+        {% endfor %}
+        </ul>
+    </div>
 
     <!-- Form for posting a news -->
     <form method="post" name="post_news" id="form_news">
@@ -43,14 +42,22 @@
     function onCategoryChange(opt) {
         var keywords = opt.attr('value');
 
-        var keywords_html = document.getElementById('keywords');
-        keywords_html.deleteContents();
+        var keywords_title_html = document.getElementById('keywords_title');
+        var keywords_content_html = document.getElementById('keywords_content');
+        keywords_title_html.deleteContents();
+        keywords_content_html.deleteContents();
 
         for (var i = 0; i < keywords.count; ++i) {
             var keyword_html = document.createElement('li');
             keyword_html.addClass('keyword');
             keyword_html.appendChild(document.createTextNode(keywords[i]));
-            keywords_html.appendChild(keyword_html);
+            keywords_title_html.appendChild(keyword_html);
+        }
+        for (var i = 0; i < keywords.count; ++i) {
+            var keyword_html = document.createElement('li');
+            keyword_html.addClass('keyword');
+            keyword_html.appendChild(document.createTextNode(keywords[i]));
+            keywords_title_html.appendChild(keyword_html);
         }
         keywords_html.createElement('li');
     }

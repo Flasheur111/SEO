@@ -8,4 +8,4 @@ class ArticleParser:
 
         article.parse()
 
-        return {'authors': article.authors, 'publish_date': article.publish_date, 'text': article.text, 'image': article.top_image}
+        return {'title': 'TTT', 'authors': article.authors, 'publish_date': article.publish_date, 'text': article.text, 'image': article.top_image}
