@@ -13,8 +13,8 @@ def not_found(error):
 
 
 # Importing modules
-from app.home.views import home
-from app.articles.views import articles
+from home.views import home
+from articles.views import articles
 
 # Register blueprints
 app.register_blueprint(home)

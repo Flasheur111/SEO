@@ -372,112 +372,112 @@ DEFAULT_ENCERRORS = "strict"
 #        a fchar.
 #        \202 is a special ,
 #        \226 \227 are special -
-alonemarks = u"!?¿;,\202*¤@°:%|¦/()[\]{}<>«»´`¨&~=#±\226"+\
-             u"\227£¥$©®\""
+alonemarks = "!?¿;,\202*¤@°:%|¦/()[\]{}<>«»´`¨&~=#±\226"+\
+             "\227£¥$©®\""
 g_langsupport = {
     "en": { "binfile-win": "tree-tagger.exe",
             "binfile-lin": "tree-tagger",
             "binfile-darwin": "tree-tagger",
             "tagparfile": "english.par",
             "abbrevfile": "english-abbreviations",
-            "pchar"     : alonemarks+ur"'",
-            "fchar"     : alonemarks+ur"'",
-            "pclictic"  : ur"",
-            "fclictic"  : ur"'(s|re|ve|d|m|em|ll)|n't",
-            "number"    : ur"""(
+            "pchar"     : alonemarks+r"'",
+            "fchar"     : alonemarks+r"'",
+            "pclictic"  : r"",
+            "fclictic"  : r"'(s|re|ve|d|m|em|ll)|n't",
+            "number"    : r"""(
                             [-+]?[0-9]+(?:\.[0-9]*)?(?:[eE][-+]?[0-9]+)?
                                 |
                             [-+]?\.[0-9]+(?:[eE][-+]?[0-9]+)?
                               )""",
-            "dummysentence": u"This is a dummy sentence to ensure data push .",
-            "replurlexp": ur' replaced-url <repurl text="\1" />',
-            "replemailexp": ur' replaced-email <repemail text="\1" />',
-            "replipexp" : ur' replaced-ip <repip text="\1" />',
-            "repldnsexp" : ur' replaced-dns <repdns text="\1" />'
+            "dummysentence": "This is a dummy sentence to ensure data push .",
+            "replurlexp": r' replaced-url <repurl text="\1" />',
+            "replemailexp": r' replaced-email <repemail text="\1" />',
+            "replipexp" : r' replaced-ip <repip text="\1" />',
+            "repldnsexp" : r' replaced-dns <repdns text="\1" />'
           },
     "fr": { "binfile-win": "tree-tagger.exe",
             "binfile-lin": "tree-tagger",
             "binfile-darwin": "tree-tagger",
             "tagparfile": "french.par",
             "abbrevfile": "french-abbreviations",
-            "pchar"     : alonemarks+ur"'",
-            "fchar"     : alonemarks+ur"'",
-            "pclictic"  : ur"[dcjlmnstDCJLNMST]'|[Qq]u'|[Jj]usqu'|[Ll]orsqu'",
-            "fclictic"  : ur"'-t-elles|-t-ils|-t-on|-ce|-elles|-ils|-je|-la|"+\
-                          ur"-les|-leur|-lui|-mêmes|-m'|-moi|-on|-toi|-tu|-t'|"+\
-                          ur"-vous|-en|-y|-ci|-là",
-            "number"    : ur"""(
+            "pchar"     : alonemarks+r"'",
+            "fchar"     : alonemarks+r"'",
+            "pclictic"  : r"[dcjlmnstDCJLNMST]'|[Qq]u'|[Jj]usqu'|[Ll]orsqu'",
+            "fclictic"  : r"'-t-elles|-t-ils|-t-on|-ce|-elles|-ils|-je|-la|"+\
+                          r"-les|-leur|-lui|-mêmes|-m'|-moi|-on|-toi|-tu|-t'|"+\
+                          r"-vous|-en|-y|-ci|-là",
+            "number"    : r"""(
                             [-+]?[0-9]+(?:[.,][0-9]*)?(?:[eE][-+]?[0-9]+)?
                                 |
                             [-+]?[.,][0-9]+(?:[eE][-+]?[0-9]+)?
                                )""",
-            "dummysentence": u"Cela est une phrase inutile pour assurer la "+\
-                          u"transmission des données .",
-            "replurlexp": ur' url-remplacée <repurl text="\1" />',
-            "replemailexp": ur' email-remplacé <repemail text="\1" />',
-            "replipexp" : ur' ip-remplacée <repdip text="\1" />',
-            "repldnsexp" : ur' dns-remplacé <repdns text="\1" />'
+            "dummysentence": "Cela est une phrase inutile pour assurer la "+\
+                          "transmission des données .",
+            "replurlexp": r' url-remplacée <repurl text="\1" />',
+            "replemailexp": r' email-remplacé <repemail text="\1" />',
+            "replipexp" : r' ip-remplacée <repdip text="\1" />',
+            "repldnsexp" : r' dns-remplacé <repdns text="\1" />'
           },
     "de": { "binfile-win": "tree-tagger.exe",
             "binfile-lin": "tree-tagger",
             "binfile-darwin": "tree-tagger",
             "tagparfile": "german.par",
             "abbrevfile": "german-abbreviations",
-            "pchar"     : alonemarks+ur"'",
-            "fchar"     : alonemarks+ur"'",
-            "pclictic"  : ur"",
-            "fclictic"  : ur"'(s|re|ve|d|m|em|ll)|n't",
-            "number"    : ur"""(
+            "pchar"     : alonemarks+r"'",
+            "fchar"     : alonemarks+r"'",
+            "pclictic"  : r"",
+            "fclictic"  : r"'(s|re|ve|d|m|em|ll)|n't",
+            "number"    : r"""(
                             [-+]?[0-9]+(?:\.[0-9]*)?(?:[eE][-+]?[0-9]+)?
                                 |
                             [-+]?\.[0-9]+(?:[eE][-+]?[0-9]+)?
                               )""",
-            "dummysentence": u"Das ist ein Testsatz um das Stossen der "+\
-                            u"Daten sicherzustellen .",
-            "replurlexp": ur' replaced-url <repurl text="\1" />',
-            "replemailexp": ur' replaced-email <repemail text="\1" />',
-            "replipexp" : ur' replaced-ip <repip text="\1" />',
-            "repldnsexp" : ur' replaced-dns <repdns text="\1" />'
+            "dummysentence": "Das ist ein Testsatz um das Stossen der "+\
+                            "Daten sicherzustellen .",
+            "replurlexp": r' replaced-url <repurl text="\1" />',
+            "replemailexp": r' replaced-email <repemail text="\1" />',
+            "replipexp" : r' replaced-ip <repip text="\1" />',
+            "repldnsexp" : r' replaced-dns <repdns text="\1" />'
           },
     "es": { "binfile-win": "tree-tagger.exe",
             "binfile-lin": "tree-tagger",
             "binfile-darwin": "tree-tagger",
             "tagparfile": "spanish.par",
             "abbrevfile": "spanish-abbreviations",
-            "pchar"     : alonemarks+ur"'",
-            "fchar"     : alonemarks+ur"'",
-            "pclictic"  : ur"",
-            "fclictic"  : ur"",
-            "number"    : ur"""(
+            "pchar"     : alonemarks+r"'",
+            "fchar"     : alonemarks+r"'",
+            "pclictic"  : r"",
+            "fclictic"  : r"",
+            "number"    : r"""(
                              [-+]?[0-9]+(?:[.,][0-9]*)?(?:[eE][-+]?[0-9]+)?
                                 |
                             [-+]?[.,][0-9]+(?:[eE][-+]?[0-9]+)?
                                )""",
-             "dummysentence": u"Quiero darle las gracias a usted y explicar un malentendido.",
-            "replurlexp": ur' sustituir-url <repurl text="\1" />',
-            "replemailexp": ur' sustituir-email <repemail text="\1" />',
-            "replipexp" : ur' sustituir-ip <repdip text="\1" />',
-            "repldnsexp" : ur' sustituir-dns <repdns text="\1" />'
+             "dummysentence": "Quiero darle las gracias a usted y explicar un malentendido.",
+            "replurlexp": r' sustituir-url <repurl text="\1" />',
+            "replemailexp": r' sustituir-email <repemail text="\1" />',
+            "replipexp" : r' sustituir-ip <repdip text="\1" />',
+            "repldnsexp" : r' sustituir-dns <repdns text="\1" />'
            },
     }
 
 # We consider following rules to apply whatever be the langage.
 # ... is an ellipsis, put spaces around before splitting on spaces
 # (make it a token)
-ellipfind_re = re.compile(ur"(\.\.\.)",
+ellipfind_re = re.compile(r"(\.\.\.)",
                           re.IGNORECASE|re.VERBOSE)
-ellipfind_subst = ur" ... "
+ellipfind_subst = r" ... "
 # A regexp to put spaces if missing after alone marks.
-punct1find_re = re.compile(ur"(["+alonemarks+"])([^ ])",
+punct1find_re = re.compile(r"(["+alonemarks+"])([^ ])",
                            re.IGNORECASE|re.VERBOSE)
-punct1find_subst = ur"\1 \2"
+punct1find_subst = r"\1 \2"
 # A regexp to put spaces if missing before alone marks.
-punct2find_re = re.compile(ur"([^ ])([["+alonemarks+"])",
+punct2find_re = re.compile(r"([^ ])([["+alonemarks+"])",
                            re.IGNORECASE|re.VERBOSE)
-punct2find_subst = ur"\1 \2"
+punct2find_subst = r"\1 \2"
 # A regexp to identify acronyms like U.S.A. or U.S.A (written to force
 # at least two chars in the acronym, and the final dot optionnal).
-acronymexpr_re = re.compile(ur"^[a-zÀ-ÿ]+(\.[a-zÀ-ÿ])+\.?$",
+acronymexpr_re = re.compile(r"^[a-zÀ-ÿ]+(\.[a-zÀ-ÿ])+\.?$",
                            re.IGNORECASE|re.VERBOSE)
 
 #==============================================================================
@@ -519,30 +519,30 @@ def PipeWriter(pipe,text,flushsequence,encoding=TREETAGGER_ENCODING,
 
         logger.info("Writing starting part to pipe.")
         # Note: STARTOFTEXT is a str - no encoding (basic ASCII).
-        pipe.write(STARTOFTEXT+"\n")
+        pipe.write(b"".join([STARTOFTEXT.encode(),b"\n"]))
 
         logger.info("Writing data to pipe.")
 
         if text :
-            if isinstance(text,basestring) :
+            if isinstance(text,str) :
                 # Typically if called without pre-processing.
-                if isinstance(text,unicode) :
+                if isinstance(text,str) :
                     text = text.encode(encoding,errors)
-                pipe.write(text)
+                pipe.write(bytes(text, 'utf-8'))
                 if text[-1] != '\n' : pipe.write("\n")
             else :
                 # Typically when we have done pre-processing.
                 for line in text :
-                    if isinstance(line,unicode) :
+                    if isinstance(line,str) :
                         line = line.encode(encoding,errors)
                     pipe.write(line)
-                    pipe.write("\n")
+                    pipe.write(b"\n")
 
         logger.info("Writing ending and flushing part to pipe.")
         # Note: ENDOFTEXT is a str - no encoding (basic ASCII).
-        if isinstance(flushsequence,unicode) :
+        if isinstance(flushsequence,str) :
             flushsequence = flushsequence.encode(encoding,errors)
-        pipe.write(ENDOFTEXT+"\n.\n"+flushsequence+"\n")
+        pipe.write(b"".join([ENDOFTEXT.encode(), b"\n.\n", flushsequence, b"\n"]))
         pipe.flush()
         logger.info("Finished writing data to pipe. Pipe flushed.")
     except :
@@ -695,16 +695,16 @@ class TreeTagger (object) :
         Internal use.
         """
         #----- Find langage to tag.
-        if kargs.has_key("TAGLANG") :
+        if "TAGLANG" in kargs :
             self.lang = kargs["TAGLANG"]
-        elif os.environ.has_key("TAGLANG") :
+        elif "TAGLANG" in os.environ :
             self.lang = os.environ["TAGLANG"]
         else :
             self.lang = "en"
         self.lang = self.lang[:2].lower()
-        if not g_langsupport.has_key(self.lang) :
+        if self.lang not in g_langsupport :
             logger.error("Langage %s not supported.",self.lang)
-            raise TreeTaggerError,"Unsupported langage code: "+self.lang
+            raise TreeTaggerError("Unsupported langage code: "+self.lang)
         logger.info("lang=%s",self.lang)
         self.langsupport = g_langsupport[self.lang]
 
@@ -715,17 +715,17 @@ class TreeTagger (object) :
         Internal use.
         """
         #----- Find TreeTagger directory.
-        if kargs.has_key("TAGDIR") :
+        if "TAGDIR" in kargs :
             self.tagdir = kargs["TAGDIR"]
-        elif os.environ.has_key("TAGDIR") :
+        elif "TAGDIR" in os.environ :
             self.tagdir = os.environ["TAGDIR"]
         else :
             logger.error("Cant locate TreeTagger directory via TAGDIR.")
-            raise TreeTaggerError,"Cant locate TreeTagger directory via TAGDIR."
+            raise TreeTaggerError("Cant locate TreeTagger directory via TAGDIR.")
         self.tagdir = os.path.abspath(self.tagdir)
         if not os.path.isdir(self.tagdir) :
             logger.error("Bad TreeTagger directory: %s",self.tagdir)
-            raise TreeTaggerError,"Bad TreeTagger directory: "+self.tagdir
+            raise TreeTaggerError("Bad TreeTagger directory: "+self.tagdir)
         logger.info("tagdir=%s",self.tagdir)
 
         #----- Set subdirectories.
@@ -736,24 +736,24 @@ class TreeTagger (object) :
         #----- Set binary by platform.
         if sys.platform == "win32" :
             self.tagbin = os.path.join(self.tagbindir,self.langsupport["binfile-win"])
-        elif sys.platform == "linux2" :
+        elif sys.platform == "linux2" or sys.platform == "linux" :
             self.tagbin =os.path.join(self.tagbindir,self.langsupport["binfile-lin"])
         elif sys.platform == "darwin" :
             self.tagbin =os.path.join(self.tagbindir,self.langsupport ["binfile-darwin"])
         else :
             logger.error("TreeTagger binary name undefined for platform %s",
                                                                 sys.platform)
-            raise TreeTaggerError,"TreeTagger binary name undefined "+\
-                                  "for platform "+sys.platform
+            raise TreeTaggerError("TreeTagger binary name undefined "+\
+                                  "for platform "+sys.platform)
         if not os.path.isfile(self.tagbin) :
             logger.error("TreeTagger binary invalid: %s", self.tagbin)
-            raise TreeTaggerError,"TreeTagger binary invalid: " + self.tagbin
+            raise TreeTaggerError("TreeTagger binary invalid: " + self.tagbin)
         logger.info("tagbin=%s",self.tagbin)
 
         #----- Find options.
-        if kargs.has_key("TAGOPT") :
+        if "TAGOPT" in kargs :
             self.tagopt = kargs["TAGOPT"]
-        elif os.environ.has_key("TAGOPT") :
+        elif "TAGOPT" in os.environ :
             self.tagopt = os.environ["TAGOPT"]
         else :
             self.tagopt = "-token -lemma -sgml -quiet"
@@ -765,9 +765,9 @@ class TreeTagger (object) :
         logger.info("tagopt=%s",self.tagopt)
 
         #----- Find parameter file.
-        if kargs.has_key("TAGPARFILE") :
+        if "TAGPARFILE" in kargs :
             self.tagparfile = kargs["TAGPARFILE"]
-        elif os.environ.has_key("TAGPARFILE") :
+        elif "TAGPARFILE" in os.environ :
             self.tagparfile = os.environ["TAGPARFILE"]
         else :
             self.tagparfile = None
@@ -786,32 +786,32 @@ class TreeTagger (object) :
             else :
                 logger.error("TreeTagger parameter file invalid: %s",
                                                         self.tagparfile)
-                raise TreeTaggerError,"TreeTagger parameter file invalid: "+\
-                                      self.tagparfile
+                raise TreeTaggerError("TreeTagger parameter file invalid: "+\
+                                      self.tagparfile)
         logger.info("tagparfile=%s",self.tagparfile)
 
         #----- Store encoding/decoding parameters.
-        if kargs.has_key("TAGINENC") :
+        if "TAGINENC" in kargs :
             self.taginencoding = kargs["TAGINENC"]
-        elif os.environ.has_key("TAGINENC") :
+        elif "TAGINENC" in os.environ :
             self.taginencoding = os.environ["TAGINENC"]
         else :
             self.taginencoding = TREETAGGER_ENCODING
-        if kargs.has_key("TAGOUTENC") :
+        if "TAGOUTENC" in kargs :
             self.tagoutencoding = kargs["TAGOUTENC"]
-        elif os.environ.has_key("TAGOUTENC") :
+        elif "TAGOUTENC" in os.environ :
             self.tagoutencoding = os.environ["TAGOUTENC"]
         else :
             self.tagoutencoding = TREETAGGER_ENCODING
-        if kargs.has_key("TAGINENCERR") :
+        if "TAGINENCERR" in kargs :
             self.taginencerr = kargs["TAGINENCERR"]
-        elif os.environ.has_key("TAGINENCERR") :
+        elif "TAGINENCERR" in os.environ :
             self.taginencerr = os.environ["TAGINENCERR"]
         else :
             self.taginencerr = TREETAGGER_INENCERR
-        if kargs.has_key("TAGOUTENCERR") :
+        if "TAGOUTENCERR" in kargs :
             self.tagoutencerr = kargs["TAGOUTENCERR"]
-        elif os.environ.has_key("TAGOUTENCERR") :
+        elif "TAGOUTENCERR" in os.environ :
             self.tagoutencerr = os.environ["TAGOUTENCERR"]
         else :
             self.tagoutencerr = TREETAGGER_OUTENCERR
@@ -833,9 +833,9 @@ class TreeTagger (object) :
         Internal use.
         """
         #----- Find abbreviations file.
-        if kargs.has_key("TAGABBREV") :
+        if "TAGABBREV" in kargs :
             self.abbrevfile = kargs["TAGABBREV"]
-        elif os.environ.has_key("TAGABBREV") :
+        elif "TAGABBREV" in os.environ :
             self.abbrevfile = os.environ["TAGABBREV"]
         else :
             self.abbrevfile = None
@@ -853,8 +853,8 @@ class TreeTagger (object) :
                 self.abbrevfile = maybefile
             else :
                 logger.error("Abbreviation file invalid: %s",self.abbrevfile)
-                raise TreeTaggerError,"Abbreviation file invalid: "+\
-                                      self.abbrevfile
+                raise TreeTaggerError("Abbreviation file invalid: "+\
+                                      self.abbrevfile)
         logger.info("abbrevfile=%s",self.abbrevfile)
 
         #----- Read file containing list of abbrevitations.
@@ -1029,19 +1029,19 @@ class TreeTagger (object) :
         if (tagblanks or numlines) and self.removesgml :
             logger.error("Line numbering/blanks tagging need use of -sgml "+\
                          "option for TreeTagger.")
-            raise TreeTaggerError,"Line numbering/blanks tagging need use "+\
-                                  "of -sgml option for TreeTagger."
+            raise TreeTaggerError("Line numbering/blanks tagging need use "+\
+                                  "of -sgml option for TreeTagger.")
 
         # Manage encoding.
-        use_unicode = isinstance(text,unicode) or (encoding in(unicode,"unicode"))
+        use_unicode = isinstance(text,str) or (encoding in(str,"unicode"))
 
         if (isinstance(text,list) or isinstance(text,tuple)) and encoding is None :
-            raise TreeTaggerError,"Must provide an encoding to TagText when using list/tuple as input."
+            raise TreeTaggerError("Must provide an encoding to TagText when using list/tuple as input.")
         if encoding is None : encoding = USER_ENCODING
 
-        if isinstance(text,basestring) : text = [ text ]
+        if isinstance(text,str) : text = [ text ]
         for i,t in enumerate(text) :
-            if not isinstance(t,unicode) :
+            if not isinstance(t,str) :
                 text[i] = t.decode(encoding,errors)
 
         # Preprocess text (prepare for TreeTagger).
@@ -1140,7 +1140,7 @@ class TreeTagger (object) :
         # used to identify lines in the flow of tags).
         if numlines :
             logger.debug("Numbering lines.")
-            if isinstance(text,basestring) :
+            if isinstance(text,str) :
                 lines = text.splitlines()
             else :
                 lines = text
@@ -1154,7 +1154,7 @@ class TreeTagger (object) :
             del newlines
             logger.debug("Inserted line numbers as SGML tags between lines.")
         else :
-            if not isinstance(text,basestring) :
+            if not isinstance(text,str) :
                 s = " ".join(text)
             else :
                 s = text
@@ -1265,7 +1265,7 @@ class TreeTagger (object) :
         # are two consecutive dots.
         if not text : return []
 
-        text = u" "+text+" "
+        text = " "+text+" "
 
         # Put blanks before and after '...' (extract ellipsis).
         text = ellipfind_re.sub(ellipfind_subst,text)
@@ -1359,7 +1359,7 @@ class TreeTagger (object) :
                 part = part[:-1]
 
             # handle explicitly listed tokens
-            if self.abbterms.has_key(part.lower()) :
+            if part.lower() in self.abbterms :
                 if DEBUG_PREPROCESS : logger.debug("Found explicit token: %r",part)
                 newparts.extend(prefix)
                 newparts.append(part)
@@ -1421,7 +1421,7 @@ class TreeTagger (object) :
 
 #==============================================================================
 # XML names syntax:
-SGML_name = ur"[_A-Za-zÀ-ÿ][-_\.:A-Za-zÀ-ÿ0-9]*"
+SGML_name = r"[_A-Za-zÀ-ÿ][-_\.:A-Za-zÀ-ÿ0-9]*"
 # XML tags (as group, with parenthesis !!!).
 SGML_tag = r"""
         (
@@ -1457,8 +1457,8 @@ def SplitSGML(text) :
 
 
 #==============================================================================
-BlankToTag_tags = [(u' ',TAGSPACE),(u'\t',TAGTAB),(u'\n',TAGLF),
-                   (u'\r',TAGCR),(u'\v',TAGVT),(u'\f',TAGFF)]
+BlankToTag_tags = [(' ',TAGSPACE),('\t',TAGTAB),('\n',TAGLF),
+                   ('\r',TAGCR),('\v',TAGVT),('\f',TAGFF)]
 def BlankToTag(text) :
     """Replace blanks characters by corresponding SGML tags.
 
@@ -1473,7 +1473,7 @@ def BlankToTag(text) :
 
 
 #==============================================================================
-def maketransU(s1, s2, todel=u""):
+def maketransU(s1, s2, todel=""):
     """Build translation table for use with unicode.translate().
 
     :param s1: string of characters to replace.
@@ -1486,14 +1486,14 @@ def maketransU(s1, s2, todel=u""):
     :rtype: dict
     """
     # We go unicode internally - ensure callers are ok with that.
-    assert (isinstance(s1,unicode))
-    assert (isinstance(s2,unicode))
-    trans_tab = dict( zip( map(ord, s1), map(ord, s2) ) )
+    assert (isinstance(s1,str))
+    assert (isinstance(s2,str))
+    trans_tab = dict( list(zip( list(map(ord, s1)), list(map(ord, s2)) )) )
     trans_tab.update( (ord(c),None) for c in todel )
     return trans_tab
 
 #BlankToSpace_table = string.maketrans (u"\r\n\t\v\f",u"     ")
-BlankToSpace_table = maketransU (u"\r\n\t\v\f",u"     ")
+BlankToSpace_table = maketransU ("\r\n\t\v\f","     ")
 def BlankToSpace(text) :
     """Replace blanks characters by real spaces.
 
@@ -1538,7 +1538,7 @@ Ip_expression = r"""
         (?:[0-9]{1,3}\.){3}[0-9]{1,3}
     )
     """
-IpMatch_re = re.compile(ur"("+Ip_expression+")",
+IpMatch_re = re.compile(r"("+Ip_expression+")",
                 re.VERBOSE|re.IGNORECASE)
 
 
@@ -1546,7 +1546,7 @@ IpMatch_re = re.compile(ur"("+Ip_expression+")",
 # Yes, I know, should not fix top level domains here... and accept any TLD.
 # But this help to avoid mathcing a domain name with just x.y strings.
 # If needed, fill a bug with a missing TLD to add.
-DnsHost_expression = ur"""
+DnsHost_expression = r"""
         (?:
             [-a-z0-9]+\.                # Host name
             (?:[-a-z0-9]+\.)*           # Intermediate domains
@@ -1590,12 +1590,12 @@ DnsHost_expression = ur"""
                 |
         localhost
         )"""
-DnsHostMatch_re = re.compile(ur"("+DnsHost_expression+r")",
+DnsHostMatch_re = re.compile(r"("+DnsHost_expression+r")",
         re.VERBOSE|re.IGNORECASE)
 
 #==============================================================================
 # See http://www.ietf.org/rfc/rfc1738.txt?number=1738
-UrlMatch_expression = ur"""(
+UrlMatch_expression = r"""(
                 # Scheme part
         (?:ftp|https?|gopher|mailto|news|nntp|telnet|wais|file|prospero):
                 # IP Host specification (optionnal)
@@ -1613,7 +1613,7 @@ UrlMatch_re = re.compile(UrlMatch_expression, re.VERBOSE|re.IGNORECASE)
 
 
 #==============================================================================
-EmailMatch_expression = ur"""(
+EmailMatch_expression = r"""(
             [-a-z0-9._']+@
             """+DnsHost_expression+r"""
             )"""
@@ -1712,7 +1712,7 @@ def main(*args) :
     """
     if args and args[0].lower() in ("-h","h","--help","-help","help",
                                     "--aide","-aide","aide","?"):
-        print help_string
+        print(help_string)
         sys.exit(0)
 
     # Set default, then process options.
@@ -1794,7 +1794,7 @@ def main(*args) :
             # Note: as we provide Unicode, we dont care about encoding in TegText().
             res = tagger.TagText(text,numlines,tagonly,prepronly,tagblanks)
             logger.info("Processing with file %s, writing to %s.%s.",f,f,RESEXT)
-            res = u"\n".join(res)
+            res = "\n".join(res)
             fwrite = codecs.open(f+"."+RESEXT,"w",encoding=filesencoding,errors=encerrors)
             try :
                 fwrite.write(res)
