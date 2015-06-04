@@ -12,17 +12,19 @@ def lemmatisation_full_article(article_rss, k=1, lang='fr'):
     return articles
 
 def lemmatisation(array_rss, lang, k=1):
+    if len(array_rss) == 0:
+        return {}
     occ = {}
     doc = {}
     for rss in array_rss:
-        result, doc = lemmatisation_intern(lang, rss, k, occ, doc)
+        occ, doc = lemmatisation_intern(lang, rss, k, occ, doc)
 
-    max_occ = max(result.values())
+    max_occ = max(occ.values())
     nb_doc = len(array_rss)
 
     result = {}
     for key in result:
-        tf = result[key] / max_occ
+        tf = occ[key] / max_occ
         idf = log(nb_doc / doc[key]) + 1
         score = tf * idf
         result[key] = score

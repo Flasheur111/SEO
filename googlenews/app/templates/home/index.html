@@ -12,9 +12,17 @@
     </select>
 
     <!-- Printing all the key words for the category selected -->
-    <ul id="keywords">
-    {% for key_word in key_words %}
-        <li class="keyword">{{ key_word }}</li>
+    <ul id="keywords_title">
+    {% for keyword in keywords_title %}
+        <li class="keyword">{{ keyword }}</li>
+    {% else %}
+        <li class="keyword">No keyword found</li>
+    {% endfor %}
+    </ul>
+
+    <ul id="keywords_content">
+    {% for keyword in keywords_content %}
+        <li class="keyword">{{ keyword }}</li>
     {% else %}
         <li class="keyword">No keyword found</li>
     {% endfor %}
