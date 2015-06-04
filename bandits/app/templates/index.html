@@ -3,25 +3,37 @@
     <head>
         <title>{% block title %}Les Bandits Manchots{% endblock %}</title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     </head>
     <body>
-        {% if rand <= 10 %}
-        <h1>Keyword : {{ keyword }}</h1>
-        <h2 style="background-color:green;">Exploration</h2>
-        {% else %}
-        <h2 style="background-color:red;">Exploitation</h2>
-        {% endif %}
+        <nav class="navbar navbar-inverse navarbar-fixed-top" role="navigation">
+            <div class="container">
+               <div class="navbar-header">
+                   {% if rand <= 10 %}
+                    <a class="navbar-brand" href="#">Les bandits manchots - Exploration - Keyword : {{ keyword }}</a>
+                   {% else %}
+                    <a class="navbar-brand" href="#">Les bandits manchots - Exploitation - Keyword : {{ keyword }}</a>
+                   {% endif %}
 
-        <ul style="list-style-type: none; padding-left: 0px; margin-left: 0px;">
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row">
+
             {% for (SourceUrl, MediaUrl, Title) in images %}
-            <li class="col-sm-3">
-            <a href="{{ MediaUrl }}" onClick="updateClick('{{ SourceUrl}}', '{{ MediaUrl }}', '{{ Title }}')">
-                <img src="{{ SourceUrl }}" class="img-responsive"/>
-                <figcaption>{{ Title }}</figcaption></a>
-            </li>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="{{ MediaUrl }}" onClick="updateClick('{{ SourceUrl}}', '{{ MediaUrl }}', '{{ Title }}')">
+                    <img style="width:300px; height: 300px;" class="img-responsive" src="{{ SourceUrl }}"/>
+                    <figcaption>{{ Title | truncate(20, False) }}</figcaption>
+                </a>
+            </div>
             {% endfor %}
-        </ul>
+            </div>
+        </div>
         <script type="text/javascript">
             function updateClick(SourceUrl, MediaUrl, Title)
             {
