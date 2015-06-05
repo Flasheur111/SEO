@@ -2,6 +2,7 @@ from app.tools.TreeTagger import treetaggerwrapper
 from app.tools.TreeTagger.TreeTaggerWord import *
 from math import log
 from operator import itemgetter
+import stop_words
 
 def lemmatisation_full_article(article_rss, k=1, lang='fr', nb_keyword=3):
     titles = lemmatisation(article_rss.keys(), lang, k)
@@ -48,13 +49,10 @@ def lemmatisation_intern(lang, rss, k, result, doc):
 
     # Utilisation
     tags = tagger.TagText(rss)
-    data = formatTTG(tags, tagger, get_stop_words(language=lang))
-    liste = []
-
-    data_clear = []
-    stop_words = get_stop_words(lang)
+    data = formatTTG(tags, tagger, stop_words.get_stop_words(language=lang))
 
     i = 0
+    liste = []
     while i <= len(data) - k:
         lemma = getLemma(data[i])
 

@@ -16,7 +16,14 @@ def index():
     article_rss = {elt['title']: elt['text'] for elt in l}
     # Pass the key words to the view
     categoriess = ['All', 'News', 'gjejjkgjjegkjgjkejk']
-    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr');
+    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
+    keywords_title_2, keywords_content_2 = lemmatization.lemmatisation_full_article(article_rss, k=2, lang='fr')
+    keywords_title_3, keywords_content_3 = lemmatization.lemmatisation_full_article(article_rss, k=3, lang='fr')
+    keywords_title.update(keywords_title_2)
+    keywords_title.update(keywords_title_3)
+    keywords_content.update(keywords_content_2)
+    keywords_content.update(keywords_content_3)
+
     return render_template('/home/index.html',
                            categories=categoriess,
                            keywords_title=keywords_title,
