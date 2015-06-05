@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request
 
 from app.tools.rss_parser import RssParser
 from app.tools.article_parser import ArticleParser
+
 from app.tools import lemmatization
 
 home = Blueprint('home', __name__, url_prefix='/home')

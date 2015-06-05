@@ -6,6 +6,15 @@ app = Flask(__name__)
 # Project configuration
 app.config.from_object('config')
 
+from app.database import init_db
+init_db()
+
+from app.database import db_session
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
 # Basic error handler
 @app.errorhandler(404)
 def not_found(error):
