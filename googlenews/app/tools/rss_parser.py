@@ -1,9 +1,14 @@
 import feedparser
 
 class RssParser:
+    categories = {'A la une': None, 'Automobile': 'a', 'Economie': 'b', 'Chine': 'c',
+                  'Culture': 'e', 'Gros Plan': 'ir', 'France': 'n', 'Sport': 's', 'Santé': 'm',
+                  'Science/High-Tech': 't', 'International': 'w'}
 
-    def get_news_urls(self, count = 10, category='all', lang='fr'):
-        rss_url = 'http://news.google.fr/news?pz=1&cf=' + category + '&ned=' + lang + '&hl=' + lang  + '&output=rss';
+    def get_news_urls(self, count = 10, category='A la une', lang='fr'):
+        rss_url = 'http://news.google.fr/news?pz=1&cf=all&ned=' + lang + '&hl=' + lang  + '&output=rss';
+        if self.categories[category] != None:
+            rss_url += '&topic=' + self.categories[category]
 
         request = rss_url + '&num=' + str(count)
         news_feed = feedparser.parse(request)
@@ -16,3 +21,6 @@ class RssParser:
             article_urls.append(article_url)
 
         return article_urls
+
+    def get_categories(self):
+        return self.categories
