@@ -1,5 +1,4 @@
 import app.tools.TreeTagger.treetaggerwrapper
-from stop_words import get_stop_words
 
 class TreeTaggerWord:
     def __init__(self, triplet):
@@ -7,6 +6,7 @@ class TreeTaggerWord:
 
 def formatTTG(output, treetagger, stop_words):
     words = []
+    stop_words += ['\'', '"', '.', ',', '!', '?', ':', '.', '/', '\\', '-', '(', '{', '[', ']', '}', ')', '#', '@', '«', '»', '@card@']
     for w in output:
         split = w.split("\t")
         if len(split) != 3:
