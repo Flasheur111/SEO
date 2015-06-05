@@ -36,11 +36,11 @@ def db():
     from app.database import db_session
     from app.articles.models import Article
 
-    a = Article('The end is near!', 'lmdsflksdfnsdlknf', 'sd<kjfbsd<fb<sdbj')
+    a = Article('The end is near!', 'lmdsflksdfnsdlknf', 'hfgh')
     db_session.add(a)
     db_session.commit()
 
-    return jsonify(results=a)
+    return jsonify(results=a.to_dict())
 
 @articles.route('/<int:post_id>', methods=['GET'])
 def get_post(post_id):

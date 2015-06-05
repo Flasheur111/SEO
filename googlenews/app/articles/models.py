@@ -10,13 +10,12 @@ class Article(Base):
     image = Column(String(120))
 
     def __init__(self, title, content, image):
-        self.id = id
         self.title = title
         self.content = content
         self.image = image
 
     def __repr__(self):
-        return '<Title %r>' % self.title
+        return 'yoerorqeg'
 
     def to_dict(self):
         return {'title': self.title,
