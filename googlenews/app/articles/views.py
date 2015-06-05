@@ -31,3 +31,24 @@ def index():
                            keywords_title=keywords_title,
                            keywords_content=keywords_content)
 
+@articles.route('/db', methods=['GET'])
+def db():
+    from app.database import db_session
+    from app.articles.models import Article
+
+    a = Article('The end is near!', 'lmdsflksdfnsdlknf', 'sd<kjfbsd<fb<sdbj')
+    db_session.add(a)
+    db_session.commit()
+
+    return jsonify(results=a)
+
+@articles.route('/<int:post_id>', methods=['GET'])
+def get_post(post_id):
+    from app.articles.models import Article
+
+    Article.query.all()
+    a = Article.query.filter(Article.id == post_id).first()
+
+    return jsonify(results=a.to_dict())
+
+
