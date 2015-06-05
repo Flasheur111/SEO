@@ -12,6 +12,7 @@ install:
 	sudo pip3 install newspaper3k
 	sudo curl https://raw.githubusercontent.com/codelucas/newspaper/master/download_corpora.py | python3
 
+	sudo pip3 install PyMySQL
 	sudo pip3 install Flask-SQLAlchemy
 
 run:
