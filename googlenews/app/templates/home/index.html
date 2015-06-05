@@ -20,7 +20,7 @@
 
         <ul id="keywords_content">
         {% for keyword in keywords_content %}
-            <li class="keyword">{{ keyword }}</li>
+            <li class="keyword">{{ keyword }} {{ keywords_content[keyword] }}</li>
         {% else %}
             <li class="keyword">No keyword found</li>
         {% endfor %}
