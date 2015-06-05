@@ -51,4 +51,14 @@ def get_post(post_id):
 
     return jsonify(results=a.to_dict())
 
+@articles.route('/all', methods=['GET'])
+def get_all_post():
+    from app.articles.models import Article
+
+    count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
+
+    ad = [a.to_dict() for a in Article.query.all()]
+
+    return jsonify(results=ad)
+
 
