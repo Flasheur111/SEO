@@ -14,7 +14,7 @@ install:
 
 	sudo pip3 install PyMySQL
 	sudo pip3 install Flask-SQLAlchemy
-	sudo pip3 install wtforms
+	sudo pip3 install Flask-WTF
 
 run:
 	python3 run.py
