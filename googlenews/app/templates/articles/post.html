@@ -5,16 +5,36 @@
         <div class="panel-body">
 
             <div class="row">
+                <label for="categories">Categories: </label>
+                <select name="categories" id="categories" onchange="onCategoryChange(this);">
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+                </select>
+
+                <!-- Printing all the key words for the category selected -->
+                <div id="keywords">
+                    <label for="categories">Title keywords:</label>
+                    <ul id="keywords_title">
+                    </ul>
+
+                    <label for="categories">Content keywords:</label>
+                    <ul id="keywords_content">
+                    </ul>
+                </div>
+
                 <form class="col-md-12" method=post action="/articles/post">
                   <dl>
                     {{ render_field(form.title) }}
                     {{ render_field(form.content) }}
+                    {{ render_field(form.image) }}
 
-                    {{ form.image(**{'data-provide': 'foo'}) }}
-                    <select class="image-picker show-html">
-                      <option data-img-src="http://placekitten.com/220/200" value="a" selected>Cute Kitten 1</option>
-                      <option data-img-src="http://i.f1g.fr/media/figaro/805x453_crop/2015/06/06/XVM856e875c-0c5d-11e5-bbc3-90a0f5e4cf01.jpg" value="b">Cute Kitten 2</option>
-                      <option data-img-src="http://placekitten.com/220/200" value="c">Cute Kitten 3</option>
+                    <br>
+                    <select class="image-picker">
+                      {% for (choicename, data) in form.image.choices %}
+                      <option data-img-src="http://placekitten.com/220/200" value="{{ data }}">Cute Kitten 1</option>
+
+                      {% endfor %}
                     </select>
                   </dl>
                   <p><input type=submit value=Submit>
@@ -27,8 +47,58 @@
 <script>
     $( document ).ready(function() {
         CKEDITOR.replace( 'content' );
-        $("select").imagepicker()
+        $("select.image-picker").imagepicker();
+
+        onCategoryChange(null);
     });
+
+
+    function onCategoryChange(opt) {
+        var keyword = opt === undefined ? opt.getAttribute('value') : 'a';
+
+
+        var keywords_title_html = document.getElementById('keywords_title');
+        var keywords_content_html = document.getElementById('keywords_content');
+        keywords_title_html.innerHTML = "";
+        keywords_content_html.innerHTML = "";
+
+
+        keywordsRequest(keyword, keywords_title_html,keywords_content_html);
+    }
+
+    function keywordsRequest(keyword, keywords_title_html,keywords_content_html) {
+         var xmlhttp=new XMLHttpRequest();
+
+        var url = "/articles/all";
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var keywords = JSON.parse(xmlhttp.responseText);
+                UpdateKeywords(keywords.results, keywords_title_html,keywords_content_html);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.send(JSON.stringify({ 'category' : keyword}));
+
+
+        function UpdateKeywords(keywords, keywords_title_html,keywords_content_html) {
+            console.log(keywords.length);
+
+            for (var i = 0; i < keywords.length; ++i) {
+                var keyword_html = document.createElement('li');
+                keyword_html.classList.add('keyword');
+                keyword_html.appendChild(document.createTextNode(keywords[i].title));
+                keywords_title_html.appendChild(keyword_html);
+            }
+            for (var i = 0; i < keywords.length; ++i) {
+                var keyword_html = document.createElement('li');
+                keyword_html.classList.add('keyword');
+                keyword_html.appendChild(document.createTextNode(keywords[i].title));
+                keywords_content_html.appendChild(keyword_html);
+            }
+        }
+    }
 </script>
 
 {% endblock %}

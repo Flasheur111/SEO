@@ -1,64 +1,34 @@
-{% extends "home/layout.html" %}
-{% block body %}
-    <!-- DropDownlist of all the categories -->
-    <label for="categories">Categories: </label>
-    <select name="categories" id="categories" onchange="onCategoryChange(this);">
-    {% for category in categories %}
-        <option value="{{ category }}">{{ category }}</option>
-    {% endfor %}
-    </select>
+{% extends "layout.html" %}
+{% block content %}
+<div class="panel">
+        <div class="panel-body">
+          
+          
+          {% for post in post_list %}
+          <!--/stories-->
+          <div class="row">    
+            <br>
+            <div class="col-md-5 col-sm-4 text-center">
+              <a class="story-title" href="#"><img alt="" src="http://i.f1g.fr/media/figaro/805x453_crop/2015/06/06/XVM856e875c-0c5d-11e5-bbc3-90a0f5e4cf01.jpg" style="width:100%;height:auto"></a>
+            </div>
+            <div class="col-md-7 col-sm-8">
+              <h3>Repurpose Content to Reach a Wider Audience</h3>
 
-    <!-- Printing all the key words for the category selected -->
-    <div id="keywords">
-        <ul id="keywords_title">
-        {% for keyword in keywords_title %}
-            <li class="keyword">{{ keyword }}</li>
-        {% else %}
-            <li class="keyword">No keyword found</li>
-        {% endfor %}
-        </ul>
-
-        <ul id="keywords_content">
-        {% for keyword in keywords_content %}
-            <li class="keyword">{{ keyword }} {{ keywords_content[keyword] }}</li>
-        {% else %}
-            <li class="keyword">No keyword found</li>
-        {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Form for posting a news -->
-    <form method="post" name="post_news" id="form_news">
-        <input type="text" placeholder="Title" name="title" id="form_news_title">
-        <input type="file" accept="image/*" name="image" id="form_news_image"/>
-        <input type="submit" id="form_news_submit"/>
-    </form>
-    <textarea name="content" form="form_news" id="form_news_content">
-        Enter the content here....
-    </textarea>
-
+              <div class="row">
+                <div class="col-xs-9">
+                  <p style="font-family:courier,'new courier';">{{ post }}</p>
+                  <h4><span class="label label-default">#Technology</span></h4><h4>
+                  <small style="font-family:courier,'new courier';" class="text-muted">2 hours ago  • <a href="#" class="text-muted">Read More</a></small>
+                  </h4></div>
+                <div class="col-xs-3"></div>
+              </div>
+              <br><br>
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
+          <!--/stories-->
+          
+        </div>
+</div>
 {% endblock %}
-<script type="text/javascript">
-    function onCategoryChange(opt) {
-        var keywords = opt.attr('value');
-
-        var keywords_title_html = document.getElementById('keywords_title');
-        var keywords_content_html = document.getElementById('keywords_content');
-        keywords_title_html.deleteContents();
-        keywords_content_html.deleteContents();
-
-        for (var i = 0; i < keywords.count; ++i) {
-            var keyword_html = document.createElement('li');
-            keyword_html.addClass('keyword');
-            keyword_html.appendChild(document.createTextNode(keywords[i]));
-            keywords_title_html.appendChild(keyword_html);
-        }
-        for (var i = 0; i < keywords.count; ++i) {
-            var keyword_html = document.createElement('li');
-            keyword_html.addClass('keyword');
-            keyword_html.appendChild(document.createTextNode(keywords[i]));
-            keywords_title_html.appendChild(keyword_html);
-        }
-        keywords_html.createElement('li');
-    }
-</script>
