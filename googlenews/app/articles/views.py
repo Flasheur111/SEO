@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, jsonify, request
+from flask import Blueprint, render_template,\
+                  jsonify, request, flash, redirect, url_for
 
+from app.articles.form import RegistrationForm
 from app.tools.rss_parser import RssParser
 from app.tools.article_parser import ArticleParser
 from app.tools import lemmatization
@@ -49,7 +51,17 @@ def get_post(post_id):
     Article.query.all()
     a = Article.query.filter(Article.id == post_id).first()
 
-    return jsonify(results=a.to_dict())
+    return render_template('/articles/content.html', article=a.to_dict())
+
+@articles.route('/post', methods=['GET', 'POST'])
+def post_form():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+
+        flash('Thanks for registering')
+        return redirect(url_for('home.homepage'))
+
+    return render_template('/articles/post.html', form=form)
 
 @articles.route('/all', methods=['GET'])
 def get_all_post():

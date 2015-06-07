@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+{% from "formhelper.html" import render_field %}
+<div class="panel">
+        <div class="panel-body">
+
+            <div class="row">
+                <form class="col-md-12" method=post action="/articles/post">
+                  <dl>
+                    {{ render_field(form.title) }}
+                    {{ render_field(form.content) }}
+
+                    {{ form.image(**{'data-provide': 'foo'}) }}
+                    <select class="image-picker show-html">
+                      <option data-img-src="http://placekitten.com/220/200" value="a" selected>Cute Kitten 1</option>
+                      <option data-img-src="http://i.f1g.fr/media/figaro/805x453_crop/2015/06/06/XVM856e875c-0c5d-11e5-bbc3-90a0f5e4cf01.jpg" value="b">Cute Kitten 2</option>
+                      <option data-img-src="http://placekitten.com/220/200" value="c">Cute Kitten 3</option>
+                    </select>
+                  </dl>
+                  <p><input type=submit value=Submit>
+                </form>
+              </div>
+          </div>
+
+  </div>
+
+<script>
+    $( document ).ready(function() {
+        CKEDITOR.replace( 'content' );
+        $("select").imagepicker()
+    });
+</script>
+
+{% endblock %}
