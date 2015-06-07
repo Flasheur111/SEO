@@ -33,4 +33,4 @@ def index():
 @home.route('/homepage', methods=['GET'])
 def homepage():
     post_list = {'the first one': 1, 'second one': 2}
-    return render_template('home/index2.html', post_list=post_list)
+    return render_template('home/index.html', post_list=post_list)

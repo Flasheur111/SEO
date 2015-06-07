@@ -56,16 +56,22 @@ def get_post(post_id):
 @articles.route('/post', methods=['GET', 'POST'])
 def post_form():
     form = RegistrationForm(request.form)
+    print(form.image.data)
     if request.method == 'POST' and form.validate():
-
         flash('Thanks for registering')
         return redirect(url_for('home.homepage'))
 
-    return render_template('/articles/post.html', form=form)
+    rp = RssParser()
+    categories = rp.get_categories()
+
+    return render_template('/articles/post.html', form=form, categories=categories)
 
 @articles.route('/all', methods=['GET'])
 def get_all_post():
     from app.articles.models import Article
+
+    print("Hayyyyyy")
+    print(request.args.get('category', ''))
 
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
 
