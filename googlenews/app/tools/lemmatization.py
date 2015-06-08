@@ -11,45 +11,39 @@ else:
     treetagger_path = 'app/tools/TreeTagger/64'
 
 
-def lemmatisation_full_article(article_rss, k=1, lang='fr', nb_keyword=3):
-    titles = lemmatisation(article_rss.keys(), lang, k)
-    contents = lemmatisation(article_rss.values(), lang, k)
+def lemmatization_full_article(article_rss, lang='fr', nb_keyword=6):
+    titles = lemmatization(article_rss.keys(), lang)
+    contents = lemmatization(article_rss.values(), lang)
 
-    titles_keywords = {}
-    contents_keywords = {}
-    for i in range(nb_keyword):
-        if i < len(titles):
-            titles_keywords[titles[i][0]] = titles[i][1]
-        if i < len(contents):
-            contents_keywords[contents[i][0]] = contents[i][1]
-    return titles_keywords, contents_keywords
+    return titles[:nb_keyword], contents[:nb_keyword]
 
-def lemmatisation(array_rss, lang, k=1):
+def lemmatization(array_rss, lang):
     if len(array_rss) == 0:
         return {}
-    occ = {}
-    doc = {}
+    occ = [{}, {}, {}]
+    doc = [{}, {}, {}]
     for rss in array_rss:
-        occ, doc = lemmatisation_intern(lang, rss, k, occ, doc)
+        occ, doc = lemmatization_intern(lang, rss, occ, doc)
 
-    if len(occ.values()) == 0:
+    if len(occ[0].values()) == 0:
         return {}
 
-    max_occ = max(occ.values())
-    nb_doc = len(array_rss)
-
     result = {}
-    for key in occ:
-        tf = occ[key] / max_occ
-        idf = log(nb_doc / doc[key] + 1)
-        score = tf * idf
-        result[key] = score
+    nb_doc = len(array_rss)
+    for i in range(3):
+        max_occ = max(occ[i].values())
+
+        for key in occ[i]:
+            tf = occ[i][key] / max_occ
+            idf = log(nb_doc / doc[i][key] + 1)
+            score = tf * idf
+            result[key] = score
 
     #Sorting the dictionary
-    sorted_list = sorted(result.items(), key=itemgetter(1), reverse=True)
+    sorted_list = [key[0] for key in sorted(result.items(), key=itemgetter(1), reverse=True)]
     return sorted_list
 
-def lemmatisation_intern(lang, rss, k, result, doc):
+def lemmatization_intern(lang, rss, result, doc):
     # Construction et configuration du wrapper
     tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang, TAGDIR=treetagger_path,
                                           TAGINENC='utf-8', TAGOUTENC='utf-8')
@@ -58,23 +52,24 @@ def lemmatisation_intern(lang, rss, k, result, doc):
     tags = tagger.TagText(rss)
     data = formatTTG(tags, tagger, stop_words.get_stop_words(language=lang))
 
-    i = 0
-    liste = []
-    while i <= len(data) - k:
-        lemma = getLemma(data[i])
+    for k in [1, 2, 3]:
+        i = 0
+        liste = []
+        while i <= len(data) - k:
+            lemma = getLemma(data[i])
 
-        for j in range(k - 1):
-            lemma += " " + getLemma(data[i + j + 1])
-        if lemma not in result:
-            result[lemma] = 0
-            doc[lemma] = 1
-            liste += [lemma]
-        elif lemma not in liste:
-            doc[lemma] += 1
-            liste += [lemma]
+            for j in range(k - 1):
+                lemma += " " + getLemma(data[i + j + 1])
+            if lemma not in result:
+                result[k-1][lemma] = 0
+                doc[k-1][lemma] = 1
+                liste += [lemma]
+            elif lemma not in liste:
+                doc[k-1][lemma] += 1
+                liste += [lemma]
 
-        result[lemma] += 1
-        i += 1
+            result[k-1][lemma] += 1
+            i += 1
     return result, doc
 
 def getLemma(data):

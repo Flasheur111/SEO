@@ -76,6 +76,7 @@ def get_keywords():
     rp = RssParser()
     l = []
 
+    print('----- Loading RSS -----')
     if is_full == 'true':
         ar = ArticleParser()
         l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=category)]
@@ -83,32 +84,25 @@ def get_keywords():
         l = rp.get_news_previews(count, category=category)
 
     article_rss = {elt['title']: elt['text'] for elt in l}
+    print('----- RSS Loaded -----')
 
+    print('----- Finding Keywords ------')
     if category in md5_categories.keys():
         hash = hashlib.md5()
         hash.update(bytes(str(article_rss.keys()), 'utf8'))
-        print(hash.digest())
-        print(md5_categories[category][0])
         if hash.digest() == md5_categories[category][0]:
             md5_categories[category][1]['title'] += ['Vince']
             return jsonify(results=md5_categories[category][1])
 
-    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
-    keywords_title_2, keywords_content_2 = lemmatization.lemmatisation_full_article(article_rss, k=2, lang='fr')
-    keywords_title_3, keywords_content_3 = lemmatization.lemmatisation_full_article(article_rss, k=3, lang='fr')
-    keywords_title.update(keywords_title_2)
-    keywords_title.update(keywords_title_3)
-    keywords_content.update(keywords_content_2)
-    keywords_content.update(keywords_content_3)
-
-    keywords_title = [key[0] for key in sorted(keywords_title.items(), key=itemgetter(1), reverse=True)]
-    keywords_content = [key[0] for key in sorted(keywords_content.items(), key=itemgetter(1), reverse=True)]
+    keywords_title, keywords_content = lemmatization.lemmatization_full_article(article_rss, lang='fr')
     data = dict({'title': keywords_title, 'content': keywords_content})
 
+    print('----- Caching Result -----')
     hash = hashlib.md5()
     hash.update(bytes(str(article_rss.keys()), 'utf8'))
     md5_categories[category] = (hash.digest(), data)
 
+    print('----- Request Done ------')
     return jsonify(results=data)
 
 @articles.route('/images/<string:query>', methods=['GET'])
