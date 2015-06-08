@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template,\
-                  jsonify, request, flash, redirect, url_for
+                  jsonify, request, redirect, url_for
 
 from app.articles.form import RegistrationForm
 from app.tools.rss_parser import RssParser
@@ -29,14 +29,13 @@ def index():
 @articles.route('/<int:post_id>', methods=['GET'])
 def get_post(post_id):
     from app.articles.models import Article
-    from lxml import html
 
     Article.query.all()
     article = Article.query.filter(Article.id == post_id).first()
     article = article.to_dict()
 
-    article['title'] = html.fromstring(article['title']).text_content()
-    article['content'] = html.fromstring(article['content']).text_content()
+    article['title'] = article['title']
+    article['content'] = article['content']
 
     return render_template('/articles/content.html', article=article)
 
@@ -49,11 +48,16 @@ def post_form():
         from app.database import db_session
         from app.articles.models import Article
 
-        a = Article(form.title.data, form.content.data, form.image.data)
+        image_url = 'https://pbs.twimg.com/profile_images/378800000532546226/dbe5f0727b69487016ffd67a6689e75a.jpeg'
+
+        if form.image.data != 'None':
+            image_url = form.image.data
+
+        a = Article(form.title.data, form.content.data, image_url)
         db_session.add(a)
         db_session.commit()
 
-        return redirect(url_for('home.homepage'))
+        return redirect(url_for('home.index'))
 
     rp = RssParser()
     categories = rp.get_categories()

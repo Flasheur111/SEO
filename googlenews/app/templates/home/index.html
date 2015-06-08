@@ -16,7 +16,7 @@
 
               <div class="row">
                 <div class="col-xs-9">
-                  <p style="font-family:courier,'new courier';">{{ post.content | truncate(35, False) }}</p>
+                  <p style="font-family:courier,'new courier';">{{ post.content | safe }}</p>
                   <h4><span class="label label-default">#Big News</span></h4><h4>
                   <small style="font-family:courier,'new courier';" class="text-muted"><a href="/articles/{{ post.id }}" >Read More</a></small>
                   </h4></div>

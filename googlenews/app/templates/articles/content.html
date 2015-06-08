@@ -7,11 +7,11 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 text-center">
                     <img alt="" class="img-responsive" src="{{ article.image }}" style="width:100%;height:auto">
-                    <h1>{{ article.title }}</h1>
+                    <h1>{{ article.title | safe }}</h1>
                 </div>
 
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {{ article.content }}
+                    {{ article.content | safe }}
                 </div>
             </div>
 
