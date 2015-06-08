@@ -5,6 +5,7 @@ from app.articles.form import RegistrationForm
 from app.tools.rss_parser import RssParser
 from app.tools.article_parser import ArticleParser
 from app.tools import lemmatization
+from operator import itemgetter
 
 articles = Blueprint('articles', __name__, url_prefix='/articles')
 
@@ -70,13 +71,27 @@ def post_form():
 def get_all_post():
     from app.articles.models import Article
 
-    print("Hayyyyyy")
     print(request.args.get('category', ''))
 
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
 
     ad = [a.to_dict() for a in Article.query.all()]
+    rp = RssParser()
+    ar = ArticleParser()
+    l = [ar.get_corpus(a_link, ) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+    article_rss = {elt['title']: elt['text'] for elt in l}
 
-    return jsonify(results=ad)
+    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
+    keywords_title_2, keywords_content_2 = lemmatization.lemmatisation_full_article(article_rss, k=2, lang='fr')
+    keywords_title_3, keywords_content_3 = lemmatization.lemmatisation_full_article(article_rss, k=3, lang='fr')
+    keywords_title.update(keywords_title_2)
+    keywords_title.update(keywords_title_3)
+    keywords_content.update(keywords_content_2)
+    keywords_content.update(keywords_content_3)
+
+    keywords_title = [key[0] for key in sorted(keywords_title.items(), key=itemgetter(1), reverse=True)]
+    keywords_content = [key[0] for key in sorted(keywords_content.items(), key=itemgetter(1), reverse=True)]
+    data = dict({'title': keywords_title, 'content': keywords_content})
+    return jsonify(results=data)
 
 
