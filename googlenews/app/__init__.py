@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 
 # Defining the application object
 app = Flask(__name__)
@@ -32,4 +32,4 @@ app.register_blueprint(articles)
 # Basic route
 @app.route('/')
 def index():
-    return url_for('home.index')
+    return redirect(url_for('home.index'))
