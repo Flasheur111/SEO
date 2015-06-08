@@ -50,6 +50,12 @@ ul.thumbnails.image_picker_selector li {
   min-height:127px;
 }
 
+.poster {
+  padding: -20px;
+  max-width: 100%;
+  height: auto;
+}
+
 #topPanel {
   padding-top:0px;
   padding-left:22px;
