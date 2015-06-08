@@ -90,16 +90,7 @@ def get_keywords():
             md5_categories[category][1]['title'] += ['Vince']
             return jsonify(results=md5_categories[category][1])
 
-    keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
-    keywords_title_2, keywords_content_2 = lemmatization.lemmatisation_full_article(article_rss, k=2, lang='fr')
-    keywords_title_3, keywords_content_3 = lemmatization.lemmatisation_full_article(article_rss, k=3, lang='fr')
-    keywords_title.update(keywords_title_2)
-    keywords_title.update(keywords_title_3)
-    keywords_content.update(keywords_content_2)
-    keywords_content.update(keywords_content_3)
-
-    keywords_title = [key[0] for key in sorted(keywords_title.items(), key=itemgetter(1), reverse=True)]
-    keywords_content = [key[0] for key in sorted(keywords_content.items(), key=itemgetter(1), reverse=True)]
+    keywords_title, keywords_content = lemmatization.lemmatization_full_article(article_rss, lang='fr')
     data = dict({'title': keywords_title, 'content': keywords_content})
 
     hash = hashlib.md5()
