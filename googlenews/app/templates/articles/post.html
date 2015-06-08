@@ -84,15 +84,15 @@
 
 
         function UpdateKeywords(keywords, keywords_title_html,keywords_content_html) {
-            console.log(keywords.length);
+            console.log(keywords.title[0]);
 
-            for (var i = 0; i < keywords.length; ++i) {
+            for (var i = 0; i < keywords.title.length; ++i) {
                 var keyword_html = document.createElement('li');
                 keyword_html.classList.add('keyword');
                 keyword_html.appendChild(document.createTextNode(keywords.title[i]));
                 keywords_title_html.appendChild(keyword_html);
             }
-            for (var i = 0; i < keywords.length; ++i) {
+            for (var i = 0; i < keywords.content.length; ++i) {
                 var keyword_html = document.createElement('li');
                 keyword_html.classList.add('keyword');
                 keyword_html.appendChild(document.createTextNode(keywords.content[i]));
