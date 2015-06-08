@@ -19,8 +19,7 @@ def index():
     # Pass the key words to the view
     categoriess = ['All', 'News', 'gjejjkgjjegkjgjkejk']
     keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, 2);
-    print(keywords_title)
-    print(keywords_content)
+
     return render_template('404.html',
                            categories=categoriess,
                            keywords_title=keywords_title,
@@ -42,7 +41,6 @@ def get_post(post_id):
 @articles.route('/post', methods=['GET', 'POST'])
 def post_form():
     form = RegistrationForm(request.form)
-    print(form.image.data)
     if request.method == 'POST' and form.title.validate(form)\
             and form.content.validate(form):
         from app.database import db_session
@@ -66,8 +64,6 @@ def post_form():
 
 @articles.route('/all', methods=['GET'])
 def get_all_post():
-
-    print(request.args.get('category', ''))
 
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
 
