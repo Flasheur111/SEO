@@ -6,8 +6,11 @@ from app.tools.rss_parser import RssParser
 from app.tools.article_parser import ArticleParser
 from app.tools import lemmatization
 from operator import itemgetter
+import hashlib
 
 articles = Blueprint('articles', __name__, url_prefix='/articles')
+
+md5_categories = {}
 
 @articles.route('/', methods=['GET'])
 def index():
@@ -41,6 +44,7 @@ def get_post(post_id):
 @articles.route('/post', methods=['GET', 'POST'])
 def post_form():
     form = RegistrationForm(request.form)
+    print(form.image.data)
     if request.method == 'POST' and form.title.validate(form)\
             and form.content.validate(form):
         from app.database import db_session
@@ -66,6 +70,7 @@ def post_form():
 def get_keywords():
     import html
 
+    category = request.args.get('category', '')
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
     is_full = html.escape(request.args.get('is_full', ''))
 
@@ -74,11 +79,20 @@ def get_keywords():
 
     if is_full == 'true':
         ar = ArticleParser()
-        l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+        l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=category)]
     else:
-        l = rp.get_news_previews(count, category=request.args.get('category', ''))
+        l = rp.get_news_previews(count, category=category)
 
     article_rss = {elt['title']: elt['text'] for elt in l}
+
+    if category in md5_categories.keys():
+        hash = hashlib.md5()
+        hash.update(bytes(str(article_rss.keys()), 'utf8'))
+        print(hash.digest())
+        print(md5_categories[category][0])
+        if hash.digest() == md5_categories[category][0]:
+            md5_categories[category][1]['title'] += ['Vince']
+            return jsonify(results=md5_categories[category][1])
 
     keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
     keywords_title_2, keywords_content_2 = lemmatization.lemmatisation_full_article(article_rss, k=2, lang='fr')
@@ -91,6 +105,10 @@ def get_keywords():
     keywords_title = [key[0] for key in sorted(keywords_title.items(), key=itemgetter(1), reverse=True)]
     keywords_content = [key[0] for key in sorted(keywords_content.items(), key=itemgetter(1), reverse=True)]
     data = dict({'title': keywords_title, 'content': keywords_content})
+
+    hash = hashlib.md5()
+    hash.update(bytes(str(article_rss.keys()), 'utf8'))
+    md5_categories[category] = (hash.digest(), data)
 
     return jsonify(results=data)
 
