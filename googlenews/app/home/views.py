@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from sqlalchemy import desc
 
 home = Blueprint('home', __name__, url_prefix='/home')
 
@@ -8,7 +9,7 @@ def index():
 
     ad = []
 
-    for article in Article.query.all():
+    for article in Article.query.order_by(desc(Article.id)).all():
         article = article.to_dict()
         article['title'] = article['title']
         article['content'] = article['content']

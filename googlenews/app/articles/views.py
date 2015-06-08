@@ -44,7 +44,6 @@ def get_post(post_id):
 @articles.route('/post', methods=['GET', 'POST'])
 def post_form():
     form = RegistrationForm(request.form)
-    print(form.image.data)
     if request.method == 'POST' and form.title.validate(form)\
             and form.content.validate(form):
         from app.database import db_session
