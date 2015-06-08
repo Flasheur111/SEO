@@ -62,14 +62,21 @@ def post_form():
 
     return render_template('/articles/post.html', form=form, categories=categories)
 
-@articles.route('/all', methods=['GET'])
-def get_all_post():
+@articles.route('/keywords', methods=['GET'])
+def get_keywords():
 
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
+    is_full = False if request.args.get('is_full', '') is None else bool(request.args.get('is_full', ''))
 
     rp = RssParser()
-    ar = ArticleParser()
-    l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+    l = []
+
+    if is_full:
+        ar = ArticleParser()
+        l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+    else:
+        l = rp.get_news_previews(count, category=request.args.get('category', ''))
+
     article_rss = {elt['title']: elt['text'] for elt in l}
 
     keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
@@ -99,5 +106,16 @@ def find_images(query):
     for image in results['d']['results']:
         mediaArray.append({'url': image['MediaUrl'], 'name': image['Title']})
     return jsonify(images=mediaArray)
+
+@articles.route('/contents', methods=['GET'])
+def get_contents():
+
+    count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
+
+    rp = RssParser()
+    ar = ArticleParser()
+    l = [a_link for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+
+    return jsonify(rss=l)
 
 

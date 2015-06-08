@@ -5,8 +5,9 @@
         <div class="panel-body">
 
             <div class="row">
+                {{ render_field(form.full_analysis) }}
                 <label for="categories">Categories: </label>
-                <select name="categories" id="categories" onchange="onCategoryChange(this);">
+                <select name="categories" id="categories" onchange="onCategoryChange();">
                 {% for category in categories %}
                     <option value="{{ categories[category] }}">{{ category }}</option>
                 {% endfor %}
@@ -44,7 +45,15 @@
     $( document ).ready(function() {
         CKEDITOR.replace( 'content' );
 
-        onCategoryChange(null);
+        var is_full = $(this).is(':checked');
+
+        onCategoryChange(is_full);
+    });
+
+    $("#full_analysis").change(function() {
+        var is_full = $(this).is(':checked');
+
+        onCategoryChange(is_full);
     });
 
     $("#image").change(function() {
@@ -57,8 +66,7 @@
         current_img_html.setAttribute('src', value);
     }
 
-    function onCategoryChange(opt) {
-        //var keyword = opt !== undefined ? opt.getAttribute('value') : 'a';
+    function onCategoryChange(is_full) {
         var elt = document.getElementById('categories');
         var keyword = elt.options[elt.selectedIndex].value;
 
@@ -74,25 +82,24 @@
         var images_html = { select: images_select_html};
 
         keywordsRequest(keyword, keywords_title_html, keywords_content_html,
-                        images_html);
+                        images_html, is_full);
     }
 
     function keywordsRequest(keyword, keywords_title_html,keywords_content_html,
-                             images_html) {
+                             images_html, is_full) {
         var xmlhttp = new XMLHttpRequest();
 
-        var url = "/articles/all";
+        var url = "/articles/keywords";
 
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var keywords = JSON.parse(xmlhttp.responseText);
-                console.log(keywords);
                 UpdateKeywords(keywords.results, keywords_title_html,keywords_content_html,
                                images_html);
             }
-        }
+        };
 
-        xmlhttp.open("GET", url + "?category=" + keyword, true);
+        xmlhttp.open("GET", url + "?category=" + keyword + "&is_full=" + is_full, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send(null);
 
@@ -117,8 +124,8 @@
         }
     }
 
-        function imagesRequest(keyword, images_html) {
-         var xmlhttp = new XMLHttpRequest();
+    function imagesRequest(keyword, images_html) {
+        var xmlhttp = new XMLHttpRequest();
 
         var url = "/articles/images/" + keyword;
 
@@ -127,7 +134,7 @@
                 var result = JSON.parse(xmlhttp.responseText);
                 updateImages(result.images, images_html);
             }
-        }
+        };
         xmlhttp.open("GET", url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send();
