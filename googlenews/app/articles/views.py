@@ -72,7 +72,7 @@ def get_keywords():
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
     category = request.args.get('category', '')
     is_full = False if request.args.get('is_full', '') is None else bool(request.args.get('is_full', ''))
-
+    rp = RssParser()
     if is_full:
         ar = ArticleParser()
         l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
