@@ -8,7 +8,7 @@
                 <label for="categories">Categories: </label>
                 <select name="categories" id="categories" onchange="onCategoryChange(this);">
                 {% for category in categories %}
-                    <option value="{{ category }}">{{ category }}</option>
+                    <option value="{{ categories[category] }}">{{ category }}</option>
                 {% endfor %}
                 </select>
 
@@ -30,7 +30,7 @@
                     {{ render_field(form.image) }}
 
                     <br>
-                    <img alt="" id="current_img" class="img-responsive" src="" style="width:100%;height:auto">
+                    <img alt="" id="current_img" class="img-responsive" src="" style="max-width: 500px ;height:auto">
 
                   </dl>
                   <p><input type=submit value=Submit>
@@ -58,8 +58,9 @@
     }
 
     function onCategoryChange(opt) {
-        var keyword = opt === undefined ? opt.getAttribute('value') : 'a';
-
+        //var keyword = opt !== undefined ? opt.getAttribute('value') : 'a';
+        var elt = document.getElementById('categories');
+        var keyword = elt.options[elt.selectedIndex].value;
 
         var keywords_title_html = document.getElementById('keywords_title');
         var keywords_content_html = document.getElementById('keywords_content');
@@ -85,32 +86,34 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var keywords = JSON.parse(xmlhttp.responseText);
+                console.log(keywords);
                 UpdateKeywords(keywords.results, keywords_title_html,keywords_content_html,
                                images_html);
             }
         }
-        xmlhttp.open("GET", url, true);
+
+        xmlhttp.open("GET", url + "?category=" + keyword, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xmlhttp.send(JSON.stringify({ 'category' : keyword}));
+        xmlhttp.send(null);
 
 
         function UpdateKeywords(keywords, keywords_title_html,keywords_content_html,
                                 images_html) {
 
-            for (var i = 0; i < keywords.length; ++i) {
+            for (var i = 0; i < keywords.title.length; ++i) {
                 var keyword_html = document.createElement('li');
                 keyword_html.classList.add('keyword');
-                keyword_html.appendChild(document.createTextNode(keywords[i].title));
+                keyword_html.appendChild(document.createTextNode(keywords.title[i]));
                 keywords_title_html.appendChild(keyword_html);
             }
-            for (var i = 0; i < keywords.length; ++i) {
+            for (var i = 0; i < keywords.content.length; ++i) {
                 var keyword_html = document.createElement('li');
                 keyword_html.classList.add('keyword');
-                keyword_html.appendChild(document.createTextNode(keywords[i].title));
+                keyword_html.appendChild(document.createTextNode(keywords.content[i]));
                 keywords_content_html.appendChild(keyword_html);
             }
 
-            imagesRequest(keywords[0].title, images_html)
+            imagesRequest(keywords.title[0], images_html)
         }
     }
 

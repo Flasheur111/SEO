@@ -3,7 +3,7 @@ from newspaper import Article, ArticleException
 
 class ArticleParser:
 	def get_corpus(self, article_url):
-		article = Article(article_url, language='en')
+		article = Article(article_url, language='fr')
 		article.download()
 		try:
 			article.parse()
