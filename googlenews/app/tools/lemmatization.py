@@ -41,7 +41,7 @@ def lemmatisation(array_rss, lang, k=1):
     result = {}
     for key in occ:
         tf = occ[key] / max_occ
-        idf = log(nb_doc / doc[key]) + 1
+        idf = log(nb_doc / doc[key] + 1)
         score = tf * idf
         result[key] = score
 
@@ -51,8 +51,8 @@ def lemmatisation(array_rss, lang, k=1):
 
 def lemmatisation_intern(lang, rss, k, result, doc):
     # Construction et configuration du wrapper
-    tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang,TAGDIR=treetagger_path,
-                                          TAGINENC='utf-8',TAGOUTENC='utf-8')
+    tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang, TAGDIR=treetagger_path,
+                                          TAGINENC='utf-8', TAGOUTENC='utf-8')
 
     # Utilisation
     tags = tagger.TagText(rss)
