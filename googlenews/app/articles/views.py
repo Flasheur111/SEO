@@ -6,8 +6,11 @@ from app.tools.rss_parser import RssParser
 from app.tools.article_parser import ArticleParser
 from app.tools import lemmatization
 from operator import itemgetter
+import hashlib
 
 articles = Blueprint('articles', __name__, url_prefix='/articles')
+
+md5_categories = {}
 
 @articles.route('/', methods=['GET'])
 def index():
@@ -19,8 +22,7 @@ def index():
     # Pass the key words to the view
     categoriess = ['All', 'News', 'gjejjkgjjegkjgjkejk']
     keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, 2);
-    print(keywords_title)
-    print(keywords_content)
+
     return render_template('404.html',
                            categories=categoriess,
                            keywords_title=keywords_title,
@@ -64,17 +66,29 @@ def post_form():
 
     return render_template('/articles/post.html', form=form, categories=categories)
 
-@articles.route('/all', methods=['GET'])
-def get_all_post():
-
-    print(request.args.get('category', ''))
+@articles.route('/keywords', methods=['GET'])
+def get_keywords():
 
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
-
+    category = request.args.get('category', '')
+    is_full = False if request.args.get('is_full', '') is None else bool(request.args.get('is_full', ''))
     rp = RssParser()
-    ar = ArticleParser()
-    l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+    if is_full:
+        ar = ArticleParser()
+        l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+    else:
+        l = rp.get_news_previews(count, category=request.args.get('category', ''))
+
     article_rss = {elt['title']: elt['text'] for elt in l}
+
+    if category in md5_categories.keys():
+        hash = hashlib.md5()
+        hash.update(bytes(str(article_rss.keys()), 'utf8'))
+        print(hash.digest())
+        print(md5_categories[category][0])
+        if hash.digest() == md5_categories[category][0]:
+            md5_categories[category][1]['title'] += ['Vince']
+            return jsonify(results=md5_categories[category][1])
 
     keywords_title, keywords_content = lemmatization.lemmatisation_full_article(article_rss, k=1, lang='fr')
     keywords_title_2, keywords_content_2 = lemmatization.lemmatisation_full_article(article_rss, k=2, lang='fr')
@@ -87,6 +101,10 @@ def get_all_post():
     keywords_title = [key[0] for key in sorted(keywords_title.items(), key=itemgetter(1), reverse=True)]
     keywords_content = [key[0] for key in sorted(keywords_content.items(), key=itemgetter(1), reverse=True)]
     data = dict({'title': keywords_title, 'content': keywords_content})
+
+    hash = hashlib.md5()
+    hash.update(bytes(str(article_rss.keys()), 'utf8'))
+    md5_categories[category] = (hash.digest(), data)
 
     return jsonify(results=data)
 
@@ -103,5 +121,16 @@ def find_images(query):
     for image in results['d']['results']:
         mediaArray.append({'url': image['MediaUrl'], 'name': image['Title']})
     return jsonify(images=mediaArray)
+
+@articles.route('/contents', methods=['GET'])
+def get_contents():
+
+    count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
+
+    rp = RssParser()
+    ar = ArticleParser()
+    l = [a_link for a_link in rp.get_news_urls(count, category=request.args.get('category', ''))]
+
+    return jsonify(rss=l)
 
 
