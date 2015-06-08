@@ -9,16 +9,16 @@
           <div class="row">    
             <br>
             <div class="col-md-5 col-sm-4 text-center">
-              <a class="story-title" href="#"><img alt="" src="http://i.f1g.fr/media/figaro/805x453_crop/2015/06/06/XVM856e875c-0c5d-11e5-bbc3-90a0f5e4cf01.jpg" style="width:100%;height:auto"></a>
+              <a class="story-title" href="#"><img alt="" src="{{ post.image }}" style="width:100%;height:auto"></a>
             </div>
             <div class="col-md-7 col-sm-8">
-              <h3>Repurpose Content to Reach a Wider Audience</h3>
+              <h3>{{ post.title }}</h3>
 
               <div class="row">
                 <div class="col-xs-9">
-                  <p style="font-family:courier,'new courier';">{{ post }}</p>
+                  <p style="font-family:courier,'new courier';">{{ post.content | truncate(35, False) }}</p>
                   <h4><span class="label label-default">#Technology</span></h4><h4>
-                  <small style="font-family:courier,'new courier';" class="text-muted">2 hours ago  • <a href="#" class="text-muted">Read More</a></small>
+                  <small style="font-family:courier,'new courier';" class="text-muted"><a href="/articles/{{ post.id }}" >Read More</a></small>
                   </h4></div>
                 <div class="col-xs-3"></div>
               </div>

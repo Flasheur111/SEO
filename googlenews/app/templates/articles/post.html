@@ -30,12 +30,8 @@
                     {{ render_field(form.image) }}
 
                     <br>
-                    <select class="image-picker">
-                      {% for (choicename, data) in form.image.choices %}
-                      <option data-img-src="http://placekitten.com/220/200" value="{{ data }}">Cute Kitten 1</option>
+                    <img alt="" id="current_img" class="img-responsive" src="" style="width:100%;height:auto">
 
-                      {% endfor %}
-                    </select>
                   </dl>
                   <p><input type=submit value=Submit>
                 </form>
@@ -47,11 +43,19 @@
 <script>
     $( document ).ready(function() {
         CKEDITOR.replace( 'content' );
-        $("select.image-picker").imagepicker();
 
         onCategoryChange(null);
     });
 
+    $("#image").change(function() {
+        imageUpdate($(this).val());
+    });
+
+    function imageUpdate(value) {
+
+        var current_img_html = document.getElementById('current_img');
+        current_img_html.setAttribute('src', value);
+    }
 
     function onCategoryChange(opt) {
         var keyword = opt === undefined ? opt.getAttribute('value') : 'a';
@@ -62,19 +66,27 @@
         keywords_title_html.innerHTML = "";
         keywords_content_html.innerHTML = "";
 
+        var images_select_html = document.getElementById('image');
+        images_select_html.innerHTML = "";
 
-        keywordsRequest(keyword, keywords_title_html,keywords_content_html);
+
+        var images_html = { select: images_select_html};
+
+        keywordsRequest(keyword, keywords_title_html, keywords_content_html,
+                        images_html);
     }
 
-    function keywordsRequest(keyword, keywords_title_html,keywords_content_html) {
-         var xmlhttp=new XMLHttpRequest();
+    function keywordsRequest(keyword, keywords_title_html,keywords_content_html,
+                             images_html) {
+        var xmlhttp = new XMLHttpRequest();
 
         var url = "/articles/all";
 
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var keywords = JSON.parse(xmlhttp.responseText);
-                UpdateKeywords(keywords.results, keywords_title_html,keywords_content_html);
+                UpdateKeywords(keywords.results, keywords_title_html,keywords_content_html,
+                               images_html);
             }
         }
         xmlhttp.open("GET", url, true);
@@ -82,8 +94,8 @@
         xmlhttp.send(JSON.stringify({ 'category' : keyword}));
 
 
-        function UpdateKeywords(keywords, keywords_title_html,keywords_content_html) {
-            console.log(keywords.length);
+        function UpdateKeywords(keywords, keywords_title_html,keywords_content_html,
+                                images_html) {
 
             for (var i = 0; i < keywords.length; ++i) {
                 var keyword_html = document.createElement('li');
@@ -97,6 +109,41 @@
                 keyword_html.appendChild(document.createTextNode(keywords[i].title));
                 keywords_content_html.appendChild(keyword_html);
             }
+
+            imagesRequest(keywords[0].title, images_html)
+        }
+    }
+
+        function imagesRequest(keyword, images_html) {
+         var xmlhttp = new XMLHttpRequest();
+
+        var url = "/articles/images/" + keyword;
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var result = JSON.parse(xmlhttp.responseText);
+                updateImages(result.images, images_html);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.send();
+
+
+        function updateImages(images, images_html) {
+            console.log(images.length);
+
+            for (var i = 0; i < images.length; ++i) {
+                var image_html = document.createElement('option');
+                image_html.setAttribute("value", images[i].url)
+                image_html.appendChild(document.createTextNode(images[i].name));
+
+                images_html.select.appendChild(image_html);
+            }
+
+            var default_value = images_html.select.firstElementChild.getAttribute('value');
+
+            imageUpdate(default_value);
         }
     }
 </script>

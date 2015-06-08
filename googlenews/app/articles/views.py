@@ -47,18 +47,30 @@ def db():
 @articles.route('/<int:post_id>', methods=['GET'])
 def get_post(post_id):
     from app.articles.models import Article
+    from lxml import html
 
     Article.query.all()
-    a = Article.query.filter(Article.id == post_id).first()
+    article = Article.query.filter(Article.id == post_id).first()
+    article = article.to_dict()
 
-    return render_template('/articles/content.html', article=a.to_dict())
+    article['title'] = html.fromstring(article['title']).text_content()
+    article['content'] = html.fromstring(article['content']).text_content()
+
+    return render_template('/articles/content.html', article=article)
 
 @articles.route('/post', methods=['GET', 'POST'])
 def post_form():
     form = RegistrationForm(request.form)
     print(form.image.data)
-    if request.method == 'POST' and form.validate():
-        flash('Thanks for registering')
+    if request.method == 'POST' and form.title.validate(form)\
+            and form.content.validate(form):
+        from app.database import db_session
+        from app.articles.models import Article
+
+        a = Article(form.title.data, form.content.data, form.image.data)
+        db_session.add(a)
+        db_session.commit()
+
         return redirect(url_for('home.homepage'))
 
     rp = RssParser()
@@ -70,7 +82,6 @@ def post_form():
 def get_all_post():
     from app.articles.models import Article
 
-    print("Hayyyyyy")
     print(request.args.get('category', ''))
 
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
@@ -78,5 +89,19 @@ def get_all_post():
     ad = [a.to_dict() for a in Article.query.all()]
 
     return jsonify(results=ad)
+
+@articles.route('/images/<string:query>', methods=['GET'])
+def find_images(query):
+    from app.tools.bingapi import BingSearchAPI
+
+    my_key = "ofiH66W+uTTX65ME7FKhtd2XtgAHxNEljh+700JzqFs"
+    mediaArray = []
+    bing = BingSearchAPI(my_key)
+    params = {'$format': 'json','$top': 8,'$skip': 0}
+    results = bing.search(query, params).json()
+
+    for image in results['d']['results']:
+        mediaArray.append({'url': image['MediaUrl'], 'name': image['Title']})
+    return jsonify(images=mediaArray)
 
 

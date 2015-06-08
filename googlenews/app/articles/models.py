@@ -18,6 +18,7 @@ class Article(Base):
         return 'yoerorqeg'
 
     def to_dict(self):
-        return {'title': self.title,
+        return {'id': self.id,
+                'title': self.title,
                 'content': self.content,
                 'image': self.image}
