@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Les bandits manchots</title>
+        <meta name="generator" content="Mti" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+    </head>
+    <body>
+        <header class="navbar navbar-bright navbar-fixed-top" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">Home</a>
+            </div>
+        </div>
+        </header>
+
+        <div id="masthead">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <a href="#">
+                            <h1>Les bandits manchots</h1>
+                        </a>
+                        <br>
+                    </div>
+
+                </div>
+            </div><!-- /cont -->
+
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    {% block content %}{% endblock %}
+
+                </div><!--/col-12-->
+            </div>
+        </div>
+
+        <hr>
+
+
+        <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="list-inline">
+                        <li><i class="icon-facebook icon-2x"></i></li>
+                        <li><i class="icon-twitter icon-2x"></i></li>
+                        <li><i class="icon-google-plus icon-2x"></i></li>
+                        <li><i class="icon-pinterest icon-2x"></i></li>
+                    </ul>
+
+                </div>
+                <div class="col-sm-6">
+                    <p class="pull-right">Built with <i class="icon-heart-empty"></i> from MTI</p>
+                </div>
+            </div>
+        </div>
+        </footer>
+        <!-- script references -->
+        <script type="text/javascript">
+            function updateClick(SourceUrl, MediaUrl, Title)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", "images/add", true)
+                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xmlhttp.send(JSON.stringify({ 'MediaUrl' : MediaUrl, 'SourceUrl' : SourceUrl, 'Title', Title });
+            }
+        </script>
+
+    </body>
+</html>
