@@ -1,47 +1,38 @@
-<!DOCTYPE html>
-<html lang="{% block html_lang %}en{% endblock %}">
-    <head>
-        <title>{% block title %}Les Bandits Manchots{% endblock %}</title>
+{% extends "layout.html" %}
+{% block content %}
+<nav class="navbar navbar-inverse navarbar-fixed-top" role="navigation">
+<div class="container">
+    <div class="navbar-header">
+        {% if rand <= 10 %}
+        <a class="navbar-brand" href="#">Les bandits manchots - Exploration - Keyword : {{ keyword }}</a>
+        {% else %}
+        <a class="navbar-brand" href="#">Les bandits manchots - Exploitation - Keyword : {{ keyword }}</a>
+        {% endif %}
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    </head>
-    <body>
-        <nav class="navbar navbar-inverse navarbar-fixed-top" role="navigation">
-            <div class="container">
-               <div class="navbar-header">
-                   {% if rand <= 10 %}
-                    <a class="navbar-brand" href="#">Les bandits manchots - Exploration - Keyword : {{ keyword }}</a>
-                   {% else %}
-                    <a class="navbar-brand" href="#">Les bandits manchots - Exploitation - Keyword : {{ keyword }}</a>
-                   {% endif %}
+    </div>
+</div>
+</nav>
 
-                </div>
-            </div>
-        </nav>
+<div class="container">
+    <div class="row">
 
-        <div class="container">
-            <div class="row">
-
-            {% for (SourceUrl, MediaUrl, Title) in images %}
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="{{ MediaUrl }}" onClick="updateClick('{{ SourceUrl}}', '{{ MediaUrl }}', '{{ Title }}')">
-                    <img style="width:300px; height: 300px;" class="img-responsive" src="{{ SourceUrl }}"/>
-                    <figcaption>{{ Title | truncate(20, False) }}</figcaption>
-                </a>
-            </div>
-            {% endfor %}
-            </div>
+        {% for (SourceUrl, MediaUrl, Title) in images %}
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail" href="{{ MediaUrl }}" onClick="updateClick('{{ SourceUrl}}', '{{ MediaUrl }}', '{{ Title }}')">
+                <img style="width:300px; height: 300px;" class="img-responsive" src="{{ SourceUrl }}"/>
+                <figcaption>{{ Title | truncate(20, False) }}</figcaption>
+            </a>
         </div>
-        <script type="text/javascript">
-            function updateClick(SourceUrl, MediaUrl, Title)
-            {
-	            var xmlhttp=new XMLHttpRequest();
-                xmlhttp.open("POST","images/add" ,true);
-                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                xmlhttp.send(JSON.stringify({ 'MediaUrl' : MediaUrl, 'SourceUrl' : SourceUrl, 'Title' : Title}));
-            }
-        </script>
-    </body>
-</html>
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript">
+    function updateClick(SourceUrl, MediaUrl, Title)
+{
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("POST","images/add" ,true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.send(JSON.stringify({ 'MediaUrl' : MediaUrl, 'SourceUrl' : SourceUrl, 'Title' : Title}));
+}
+</script>
+{% endblock %}
