@@ -13,6 +13,11 @@
                 {% endfor %}
                 </select>
 
+		<select id="lang" onchange="onCategoryChange();">
+		  <option value="fr">Français</option>
+		  <option value="en">English</option>
+		</select>
+
                 <!-- Printing all the key words for the category selected -->
                 <div id="keywords">
                     <label for="categories">Title keywords:</label>
@@ -67,7 +72,9 @@
     }
 
     function onCategoryChange(is_full) {
-        var elt = document.getElementById('categories');
+        var elt = document.getElementById('lang');
+        var lang = elt.options[elt.selectedIndex].value;
+        elt = document.getElementById('categories');
         var keyword = elt.options[elt.selectedIndex].value;
 
         var keywords_title_html = document.getElementById('keywords_title');
@@ -81,11 +88,11 @@
 
         var images_html = { select: images_select_html};
 
-        keywordsRequest(keyword, keywords_title_html, keywords_content_html,
+        keywordsRequest(keyword, lang, keywords_title_html, keywords_content_html,
                         images_html, is_full);
     }
 
-    function keywordsRequest(keyword, keywords_title_html,keywords_content_html,
+    function keywordsRequest(keyword, lang, keywords_title_html,keywords_content_html,
                              images_html, is_full) {
         var xmlhttp = new XMLHttpRequest();
 
@@ -99,7 +106,7 @@
             }
         };
 
-        xmlhttp.open("GET", url + "?category=" + keyword + "&is_full=" + is_full, true);
+        xmlhttp.open("GET", url + "?category=" + keyword + "&lang=" + lang + "&is_full=" + is_full, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send(null);
 

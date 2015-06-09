@@ -10,7 +10,7 @@ import hashlib
 
 articles = Blueprint('articles', __name__, url_prefix='/articles')
 
-md5_categories = {}
+md5_categories = {'en': {}, 'fr': {}}
 
 @articles.route('/', methods=['GET'])
 def index():
@@ -69,6 +69,7 @@ def post_form():
 def get_keywords():
     import html
 
+    lang = request.args.get('lang', '')
     category = request.args.get('category', '')
     count = int(request.args.get('count', '')) if request.args.get('count', '').isdigit() else None
     is_full = html.escape(request.args.get('is_full', ''))
@@ -79,9 +80,9 @@ def get_keywords():
     print('----- Loading RSS -----')
     if is_full == 'true':
         ar = ArticleParser()
-        l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=category)]
+        l = [ar.get_corpus(a_link) for a_link in rp.get_news_urls(count, category=category, lang=lang)]
     else:
-        l = rp.get_news_previews(count, category=category)
+        l = rp.get_news_previews(count, category=category, lang=lang)
 
     article_rss = {elt['title']: elt['text'] for elt in l}
     print('----- RSS Loaded -----')
@@ -90,17 +91,16 @@ def get_keywords():
     if category in md5_categories.keys():
         hash = hashlib.md5()
         hash.update(bytes(str(article_rss.keys()), 'utf8'))
-        if hash.digest() == md5_categories[category][0]:
-            md5_categories[category][1]['title'] += ['Vince']
-            return jsonify(results=md5_categories[category][1])
+        if hash.digest() == md5_categories[lang][category][0]:
+            return jsonify(results=md5_categories[lang][category][1])
 
-    keywords_title, keywords_content = lemmatization.lemmatization_full_article(article_rss, lang='fr')
+    keywords_title, keywords_content = lemmatization.lemmatization_full_article(article_rss, lang=lang)
     data = dict({'title': keywords_title, 'content': keywords_content})
 
     print('----- Caching Result -----')
     hash = hashlib.md5()
     hash.update(bytes(str(article_rss.keys()), 'utf8'))
-    md5_categories[category] = (hash.digest(), data)
+    md5_categories[lang][category] = (hash.digest(), data)
 
     print('----- Request Done ------')
     return jsonify(results=data)
