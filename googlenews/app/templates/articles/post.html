@@ -8,21 +8,45 @@
                 <div id="labels" class="hidden">
                     {{ render_field(form.full_analysis) }}
                     <label for="categories">Categories: </label>
+                    <select name="categories" id="categories" onchange="onCategoryChange();">
+                    {% for category in categories %}
+                        <option value="{{ categories[category] }}">{{ category }}</option>
+                    {% endfor %}
+                    </select>
+                    <select id="lang" class="hidden" onchange="onCategoryChange();">
+                      <option value="fr">Français</option>
+                      <option value="en">English</option>
+                    </select>
                 </div>
-                <select name="categories" id="categories" onchange="onCategoryChange();">
-                {% for category in categories %}
-                    <option value="{{ categories[category] }}">{{ category }}</option>
-                {% endfor %}
-                </select>
+
 
                 <div id="loading_dialog" class="text-center hidden">
                     <h2 style="color: red">Please wait while we are processing the keywords!</h2>
                 </div>
 
-                <select id="lang" class="hidden" onchange="onCategoryChange();">
-                  <option value="fr">Français</option>
-                  <option value="en">English</option>
-                </select>
+
+                <ul id="loading_bar" class="loader hidden">
+                    <li>
+                        <div class="circle"></div>
+                        <div class="ball"></div>
+                    </li>
+                    <li>
+                        <div class="circle"></div>
+                        <div class="ball"></div>
+                    </li>
+                    <li>
+                        <div class="circle"></div>
+                        <div class="ball"></div>
+                    </li>
+                    <li>
+                        <div class="circle"></div>
+                        <div class="ball"></div>
+                    </li>
+                    <li>
+                        <div class="circle"></div>
+                        <div class="ball"></div>
+                    </li>
+                </ul>
 
                 <!-- Printing all the key words for the category selected -->
                 <div id="keywords" class="hidden">
@@ -61,8 +85,8 @@
 
         var is_full = $(this).is(':checked');
 
-        $('#full_analysis, #categories, #image').addClass('hidden');
-        $('#loading_dialog').removeClass('hidden');
+        $('#labels, #image').addClass('hidden');
+        $('#loading_dialog, #loading_bar').removeClass('hidden');
 
         onCategoryChange(is_full);
     });
@@ -72,7 +96,8 @@
 
         $('#labels, #lang, #full_analysis, #categories,' +
                 '#keywords, #image').addClass('hidden');
-        $('#loading_dialog').removeClass('hidden');
+
+        $('#loading_dialog, #loading_bar').removeClass('hidden');
 
         onCategoryChange(is_full);
     });
@@ -82,6 +107,9 @@
     });
 
     function onCategoryChange(is_full) {
+        $('#labels, #keywords, #image').addClass('hidden');
+        $('#loading_dialog, #loading_bar').removeClass('hidden');
+
         var elt = document.getElementById('lang');
         var lang = elt.options[elt.selectedIndex].value;
         elt = document.getElementById('categories');
@@ -138,7 +166,7 @@
             }
 
             $('#labels, #full_analysis, #lang, #categories, #keywords').removeClass('hidden');
-            $('#loading_dialog').addClass('hidden');
+            $('#loading_dialog, #loading_bar').addClass('hidden');
 
             imagesRequest(keywords.title[0], images_html)
         }

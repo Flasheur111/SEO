@@ -6,7 +6,7 @@ class TreeTaggerWord:
 
 def formatTTG(output, treetagger, stop_words):
     words = []
-    stop_words += ['\'', '"', '.', ',', '!', '?', ':', '.', '/', '\\', '-', '+', '(', '{', '[', ']', '}', ')', '#', '@', '«', '»', '@card@', '>', '<', '–', '|', '%', '...']
+    stop_words += ['\'', '"', '.', ',', '!', '?', ':', '.', '/', '\\', '-', '+', '(', '{', '[', ']', '}', ')', '#', '@', '«', '»', '@card@', '>', '<', '–', '|', '%', '...', '©']
     for w in output:
         split = w.split("\t")
         if len(split) != 3:
@@ -15,12 +15,14 @@ def formatTTG(output, treetagger, stop_words):
                 split = newtag.split("\t")
                 if len(split) == 3:
                     treeTaggerWord = TreeTaggerWord(newtag.split("\t"))
-                    if treeTaggerWord.lemma not in stop_words:
+                    if treeTaggerWord.lemma not in stop_words\
+                            and treeTaggerWord.lemma != 'dns-remplacé':
                         words.append(treeTaggerWord)
                 else:
                     words.append(TreeTaggerWord([newtag, newtag, newtag]))
         else:
             treeTaggerWord = TreeTaggerWord(w.split("\t"));
-            if treeTaggerWord.lemma not in stop_words:
+            if treeTaggerWord.lemma not in stop_words\
+                    and treeTaggerWord.lemma != 'dns-remplacé':
                 words.append(treeTaggerWord)
     return words
