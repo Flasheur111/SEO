@@ -22,6 +22,7 @@ install:
 	sudo ./dbscripts/dbsetup.sh mti2016 mti2016
 
 dbsetup:
+	sudo chmod 755 dbscripts/dbsetup.sh
 	sudo ./dbscripts/dbsetup.sh mti2016 mti2016
 
 run:
