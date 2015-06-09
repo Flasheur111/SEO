@@ -1,7 +1,7 @@
 # SEO
 
 Chaîne de traitement pour Google News
-===================
+====================================
 
 Installation :
 ------------
