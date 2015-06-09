@@ -4,7 +4,7 @@
 	* make install
 
 - Start the application server with:
-	* make run
+	* make run  (Not needed when having run 'make install')
 
 - You should then see the following:
 	* Running on http://127.0.0.1:8080/ (Press CTRL+C to quit)
