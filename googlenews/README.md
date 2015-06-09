@@ -8,6 +8,7 @@ Installation :
 2) Install python 3.x.x.
 
 3) Install the dependencies with:
+
 	* make install
 
 4) Start the application server with:
