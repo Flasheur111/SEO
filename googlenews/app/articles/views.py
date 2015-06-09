@@ -109,7 +109,7 @@ def get_keywords():
 def find_images(query):
     from app.tools.bingapi import BingSearchAPI
 
-    my_key = "ofiH66W+uTTX65ME7FKhtd2XtgAHxNEljh+700JzqFs"
+    my_key = " SEmNCypr5RJ6ayluEaHai/Y5GCizaO1wtPBTjrBJ2KI"
     mediaArray = []
     bing = BingSearchAPI(my_key)
     params = {'$format': 'json', '$top': 8, '$skip': 0}
