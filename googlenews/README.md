@@ -4,6 +4,7 @@ Chaîne de traitement pour Google News
 Installation :
 ------------
 1) Install mysql and start the service.
+
 2) Install python 3.x.x.
 
 3) Install the dependencies with:
