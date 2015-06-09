@@ -54,8 +54,8 @@ Installation :
 
     * make run
 
-5) To use the application, run the command:
+5) To use the application:
 
-    * Go to http://127.0.0.1:8081/
+    * Go to http://127.0.0.1:8081/ on a webbrowser
 
 
