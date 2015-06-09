@@ -9,18 +9,28 @@ Installation :
 
 2) Install python 3.x.x.
 
-3) Install the dependencies with:
+3) Install the dependencies & create the database & run the server with:
 
-	* make install
+	* make
 
-4) Start the application server with:
-
-	* make run  (Not needed when having run 'make install')
-
-5) You should then see the following:
+4) You should then see the following:
 
 	* Running on http://127.0.0.1:8080/ (Press CTRL+C to quit)
 
 	* Restarting with stat
 
-6) Go to http://127.0.0.1:8080/ to start using the app!
+5) Go to http://127.0.0.1:8080/ to start using the app!
+
+If you want to go through each step of the setup manually:
+
+1) Install the dependencies with:
+
+	* make install
+
+2) Create the database and its user with:
+
+	* make dbsetup
+
+3) Start the application server with:
+
+	* make run
