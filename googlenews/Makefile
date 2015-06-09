@@ -16,5 +16,11 @@ install:
 	sudo pip3 install Flask-SQLAlchemy
 	sudo pip3 install Flask-WTF
 
+	sudo chmod 755 dbscripts/dbsetup.sh
+	sudo ./dbscripts/dbsetup.sh mti2016 mti2016
+
+dbsetup:
+	sudo ./dbscripts/dbsetup.sh mti2016 mti2016
+
 run:
 	python3 run.py

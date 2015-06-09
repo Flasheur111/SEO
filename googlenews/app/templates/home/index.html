@@ -3,20 +3,26 @@
 <div class="panel">
         <div class="panel-body">
           
-          
+          {% if post_list | length == 0 %}
+            <div class="text-center">
+              <h1>There are no posts here yet!</h1>
+              <h1>Begin by <a href="/articles/post">posting</a> something and it should be displayed here!</h1>
+            </div>
+          {% endif %}
+
           {% for post in post_list %}
           <!--/stories-->
           <div class="row">    
             <br>
-            <div class="col-md-5 col-sm-4 text-center">
-              <a class="story-title" href="/articles/{{ post.id }}"><img alt="" src="{{ post.image }}" style="width:100%;height:auto"></a>
+            <div class="col-md-3 col-sm-4 text-center">
+              <a class="story-title" href="/articles/{{ post.id }}"><img alt="" src="{{ post.image }}" style="max-width: 220px;height:auto"></a>
             </div>
             <div class="col-md-7 col-sm-8">
               <a href="/articles/{{ post.id }}"><h3>{{ post.title }}</h3></a>
 
               <div class="row">
                 <div class="col-xs-9">
-                  <p style="font-family:courier,'new courier';">{{ post.content | safe }}</p>
+                  <p style="font-family:courier,'new courier';">{{ post.content | safe | truncate(20, true) }}</p>
                   <h4><span class="label label-default">#Big News</span></h4><h4>
                   <small style="font-family:courier,'new courier';" class="text-muted"><a href="/articles/{{ post.id }}" >Read More</a></small>
                   </h4></div>

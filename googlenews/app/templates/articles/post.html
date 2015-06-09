@@ -5,16 +5,22 @@
         <div class="panel-body">
 
             <div class="row">
-                {{ render_field(form.full_analysis) }}
-                <label for="categories">Categories: </label>
+                <div id="labels" class="hidden">
+                    {{ render_field(form.full_analysis) }}
+                    <label for="categories">Categories: </label>
+                </div>
                 <select name="categories" id="categories" onchange="onCategoryChange();">
                 {% for category in categories %}
                     <option value="{{ categories[category] }}">{{ category }}</option>
                 {% endfor %}
                 </select>
 
+
+                <div id="loading_dialog" class="text-center hidden">
+                    <h2 style="color: red">Please wait while we are processing the keywords!</h2>
+                </div>
                 <!-- Printing all the key words for the category selected -->
-                <div id="keywords">
+                <div id="keywords" class="hidden">
                     <label for="categories">Title keywords:</label>
                     <ul id="keywords_title">
                     </ul>
@@ -28,13 +34,16 @@
                   <dl>
                     {{ render_field(form.title) }}
                     {{ render_field(form.content) }}
+
                     {{ render_field(form.image) }}
 
                     <br>
                     <img alt="" id="current_img" class="img-responsive" src="" style="max-width: 500px ;height:auto">
 
                   </dl>
-                  <p><input type=submit value=Submit>
+                    <div id="submit">
+                        <p><input type=submit value=Submit>
+                    </div>
                 </form>
               </div>
           </div>
@@ -47,11 +56,17 @@
 
         var is_full = $(this).is(':checked');
 
+        $('#full_analysis, #categories, #image').addClass('hidden');
+        $('#loading_dialog').removeClass('hidden');
+
         onCategoryChange(is_full);
     });
 
     $("#full_analysis").change(function() {
         var is_full = $(this).is(':checked');
+
+        $('#full_analysis, #categories, #keywords, #image').addClass('hidden');
+        $('#loading_dialog').removeClass('hidden');
 
         onCategoryChange(is_full);
     });
@@ -59,12 +74,6 @@
     $("#image").change(function() {
         imageUpdate($(this).val());
     });
-
-    function imageUpdate(value) {
-
-        var current_img_html = document.getElementById('current_img');
-        current_img_html.setAttribute('src', value);
-    }
 
     function onCategoryChange(is_full) {
         var elt = document.getElementById('categories');
@@ -79,7 +88,7 @@
         images_select_html.innerHTML = "";
 
 
-        var images_html = { select: images_select_html};
+        var images_html = { select: images_select_html };
 
         keywordsRequest(keyword, keywords_title_html, keywords_content_html,
                         images_html, is_full);
@@ -101,7 +110,7 @@
 
         xmlhttp.open("GET", url + "?category=" + keyword + "&is_full=" + is_full, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xmlhttp.send(null);
+        xmlhttp.send();
 
 
         function UpdateKeywords(keywords, keywords_title_html,keywords_content_html,
@@ -119,6 +128,9 @@
                 keyword_html.appendChild(document.createTextNode(keywords.content[i]));
                 keywords_content_html.appendChild(keyword_html);
             }
+
+            $('#labels, #full_analysis, #categories, #keywords').removeClass('hidden');
+            $('loading_dialog').addClass('hidden');
 
             imagesRequest(keywords.title[0], images_html)
         }
@@ -141,7 +153,6 @@
 
 
         function updateImages(images, images_html) {
-            console.log(images.length);
 
             for (var i = 0; i < images.length; ++i) {
                 var image_html = document.createElement('option');
@@ -153,8 +164,15 @@
 
             var default_value = images_html.select.firstElementChild.getAttribute('value');
 
+            $('#image').removeClass('hidden');
+
             imageUpdate(default_value);
         }
+    }
+
+    function imageUpdate(value) {
+        var current_img_html = document.getElementById('current_img');
+        current_img_html.setAttribute('src', value);
     }
 </script>
 
