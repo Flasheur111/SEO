@@ -70,7 +70,8 @@
     $("#full_analysis").change(function() {
         var is_full = $(this).is(':checked');
 
-        $('#full_analysis, #categories, #keywords, #image').addClass('hidden');
+        $('#labels, #lang, #full_analysis, #categories,' +
+                '#keywords, #image').addClass('hidden');
         $('#loading_dialog').removeClass('hidden');
 
         onCategoryChange(is_full);
@@ -137,7 +138,7 @@
             }
 
             $('#labels, #full_analysis, #lang, #categories, #keywords').removeClass('hidden');
-            $('loading_dialog').addClass('hidden');
+            $('#loading_dialog').addClass('hidden');
 
             imagesRequest(keywords.title[0], images_html)
         }
